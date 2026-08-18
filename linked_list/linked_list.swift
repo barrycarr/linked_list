@@ -55,13 +55,11 @@ func nth<T>(n: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
     }
     
     func getNth(index: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
-        guard let value = head(list: list) else {
-            return .failure(.listTooShort)
+        switch (index, list) {
+        case (0, .cons(let value, _)): return .success(value)
+        case (_, .empty): return .failure(.listTooShort)
+        case (let index, .cons(_, let rest)): return getNth(index: index - 1, list: rest)
         }
-        if index == 0 {
-            return .success(value)
-        }
-        return getNth(index: index - 1, list: tail(list: list))
     }
     
     return getNth(index: n, list: list)
