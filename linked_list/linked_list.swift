@@ -13,61 +13,37 @@ enum LinkedListError: Error {
     case listEmpty
 }
 
-class LinkedList<T> {
-    fileprivate var head: Node<T>?
-    init() {
-        self.head = nil
-    }
-
-    fileprivate init(head: Node<T>?) {
-        self.head = head
-    }
-}
-
-fileprivate class Node<T> {
-    let value: T
-    var next: Node?
-    init(value: T) {
-        self.value = value
-        self.next = nil
-    }
-}
-
-func push<T>(value: T) -> LinkedList<T> {
-    let node = Node(value: value)
-    return LinkedList<T>(head: node)
-}
-
-func push<T>(value: T, list: LinkedList<T>) -> LinkedList<T> {
-    let node = Node(value: value)
-    node.next = list.head
-    list.head = node
-    return list
+indirect enum LinkedList<T> {
+    case empty
+    case cons(T, LinkedList<T>)
 }
 
 func head<T>(list: LinkedList<T>) -> T? {
-    if let head = list.head {
-        return head.value
+    switch list {
+    case .empty: return nil
+    case let .cons(value, _): return value
     }
-    return nil
 }
 
 func tail<T>(list: LinkedList<T>) -> LinkedList<T> {
-    if list.head == nil {
-        return LinkedList<T>()
+    switch list {
+    case .empty: return .empty
+    case .cons(_, let rest): return rest
     }
-    return LinkedList<T>(head: list.head?.next)
 }
 
 func length<T>(list: LinkedList<T>) -> Int {
-    if list.head == nil {
-        return 0
+    switch list {
+    case .empty: return 0
+    case let .cons(_, rest): return 1 + length(list: rest)
     }
-    return 1 + length(list: tail(list: list))
 }
 
 func isEmpty<T>(list: LinkedList<T>) -> Bool {
-    return list.head == nil
+    switch list {
+    case .cons: return false
+    case .empty: return true
+    }
 }
 
 func nth<T>(n: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
@@ -89,4 +65,11 @@ func nth<T>(n: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
     }
     
     return getNth(index: n, list: list)
+}
+
+func nthOpt<T>(n: Int, list: LinkedList<T>) -> T? {
+    switch nth(n: n, list: list) {
+    case .success(let value): return value
+    case .failure: return nil
+    }
 }

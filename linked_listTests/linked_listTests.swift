@@ -11,7 +11,7 @@ import Testing
 struct linked_listTests {
 
     @Test func emptyListHasNoHeadTailLengthAndIsEmpty() {
-        let list = LinkedList<Int>()
+        let list = LinkedList<Int>.empty
 
         let listTail = tail(list: list)
 
@@ -21,29 +21,35 @@ struct linked_listTests {
         #expect(isEmpty(list: list))
     }
 
-    @Test func pushWithJustValueCreatesSingleItemList() {
-        let list = push(value: 10)
+    @Test func consListHasHeadLengthAndIsNotEmpty() {
+        let list = LinkedList.cons(10, LinkedList<Int>.empty)
 
         #expect(head(list: list) == 10)
         #expect(length(list: list) == 1)
         #expect(!isEmpty(list: list))
     }
 
-    @Test func pushWithListAddsValuesToTheHead() {
-        let list = LinkedList<String>()
-
-        _ = push(value: "first", list: list)
-        _ = push(value: "second", list: list)
+    @Test func consAddsValuesToTheHead() {
+        let list = LinkedList.cons("second", LinkedList.cons("first", LinkedList<String>.empty))
 
         #expect(head(list: list) == "second")
         #expect(length(list: list) == 2)
     }
 
+    @Test func listCanBePatternMatchedIntoHeadAndTail() {
+        let list = LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty))
+
+        switch list {
+        case .empty:
+            Issue.record("Expected cons list")
+        case .cons(let value, let rest):
+            #expect(value == 2)
+            #expect(head(list: rest) == 1)
+        }
+    }
+
     @Test func tailReturnsRemainingListAfterHead() {
-        let list = LinkedList<Int>()
-        _ = push(value: 1, list: list)
-        _ = push(value: 2, list: list)
-        _ = push(value: 3, list: list)
+        let list = LinkedList.cons(3, LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty)))
 
         let secondNode = tail(list: list)
         let thirdNode = tail(list: secondNode)
@@ -58,20 +64,8 @@ struct linked_listTests {
         #expect(isEmpty(list: emptyList))
     }
 
-    @Test func pushWithListReturnsTheMutatedListInstance() {
-        let list = LinkedList<Int>()
-
-        let returnedList = push(value: 10, list: list)
-
-        #expect(returnedList === list)
-        #expect(head(list: returnedList) == 10)
-        #expect(!isEmpty(list: returnedList))
-    }
-
     @Test func nthReturnsHeadForZeroIndex() {
-        let list = LinkedList<String>()
-        _ = push(value: "first", list: list)
-        _ = push(value: "second", list: list)
+        let list = LinkedList.cons("second", LinkedList.cons("first", LinkedList<String>.empty))
 
         switch nth(n: 0, list: list) {
         case .success(let value):
@@ -82,10 +76,7 @@ struct linked_listTests {
     }
 
     @Test func nthReturnsValueAtPositiveIndex() {
-        let list = LinkedList<Int>()
-        _ = push(value: 1, list: list)
-        _ = push(value: 2, list: list)
-        _ = push(value: 3, list: list)
+        let list = LinkedList.cons(3, LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty)))
 
         switch nth(n: 2, list: list) {
         case .success(let value):
@@ -96,7 +87,7 @@ struct linked_listTests {
     }
 
     @Test func nthFailsForNegativeIndex() {
-        let list = push(value: 10)
+        let list = LinkedList.cons(10, LinkedList<Int>.empty)
 
         switch nth(n: -1, list: list) {
         case .success:
@@ -109,7 +100,7 @@ struct linked_listTests {
     }
 
     @Test func nthFailsForEmptyList() {
-        let list = LinkedList<Int>()
+        let list = LinkedList<Int>.empty
 
         switch nth(n: 0, list: list) {
         case .success:
@@ -122,9 +113,7 @@ struct linked_listTests {
     }
 
     @Test func nthFailsForIndexEqualToLength() {
-        let list = LinkedList<Int>()
-        _ = push(value: 1, list: list)
-        _ = push(value: 2, list: list)
+        let list = LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty))
 
         switch nth(n: 2, list: list) {
         case .success:
@@ -137,9 +126,7 @@ struct linked_listTests {
     }
 
     @Test func nthFailsForIndexGreaterThanLength() {
-        let list = LinkedList<Int>()
-        _ = push(value: 1, list: list)
-        _ = push(value: 2, list: list)
+        let list = LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty))
 
         switch nth(n: 3, list: list) {
         case .success:
@@ -149,5 +136,41 @@ struct linked_listTests {
         case .failure(let error):
             Issue.record("Expected listTooShort failure, got \(error)")
         }
+    }
+
+    @Test func nthOptReturnsHeadForZeroIndex() {
+        let list = LinkedList.cons("second", LinkedList.cons("first", LinkedList<String>.empty))
+
+        #expect(nthOpt(n: 0, list: list) == "second")
+    }
+
+    @Test func nthOptReturnsValueAtPositiveIndex() {
+        let list = LinkedList.cons(3, LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty)))
+
+        #expect(nthOpt(n: 2, list: list) == 1)
+    }
+
+    @Test func nthOptReturnsNilForNegativeIndex() {
+        let list = LinkedList.cons(10, LinkedList<Int>.empty)
+
+        #expect(nthOpt(n: -1, list: list) == nil)
+    }
+
+    @Test func nthOptReturnsNilForEmptyList() {
+        let list = LinkedList<Int>.empty
+
+        #expect(nthOpt(n: 0, list: list) == nil)
+    }
+
+    @Test func nthOptReturnsNilForIndexEqualToLength() {
+        let list = LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty))
+
+        #expect(nthOpt(n: 2, list: list) == nil)
+    }
+
+    @Test func nthOptReturnsNilForIndexGreaterThanLength() {
+        let list = LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty))
+
+        #expect(nthOpt(n: 3, list: list) == nil)
     }
 }
