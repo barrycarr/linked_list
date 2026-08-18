@@ -71,3 +71,20 @@ func nthOpt<T>(n: Int, list: LinkedList<T>) -> T? {
     case .failure: return nil
     }
 }
+
+func singleton<T>(_ value: T) -> LinkedList<T> {
+    .cons(value, .empty)
+}
+
+func reverse<T>(_ list: LinkedList<T>) -> LinkedList<T> {
+    func reversed(_ remaining: LinkedList<T>, into result: LinkedList<T>) -> LinkedList<T> {
+        switch remaining {
+        case .empty:
+            return result
+        case .cons(let value, let rest):
+            return reversed(rest, into: .cons(value, result))
+        }
+    }
+
+    return reversed(list, into: .empty)
+}

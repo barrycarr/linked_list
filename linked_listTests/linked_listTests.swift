@@ -173,4 +173,44 @@ struct linked_listTests {
 
         #expect(nthOpt(n: 3, list: list) == nil)
     }
+
+    @Test func singletonCreatesOneItemList() {
+        let list = singleton(42)
+
+        #expect(head(list: list) == 42)
+        #expect(length(list: list) == 1)
+        #expect(head(list: tail(list: list)) == nil)
+        #expect(isEmpty(list: tail(list: list)))
+    }
+
+    @Test func reverseReturnsEmptyListForEmptyList() {
+        let list = LinkedList<Int>.empty
+
+        let reversed = reverse(list)
+
+        #expect(isEmpty(list: reversed))
+        #expect(length(list: reversed) == 0)
+    }
+
+    @Test func reverseReturnsSameSingleItemList() {
+        let list = singleton("only")
+
+        let reversed = reverse(list)
+
+        #expect(head(list: reversed) == "only")
+        #expect(length(list: reversed) == 1)
+        #expect(isEmpty(list: tail(list: reversed)))
+    }
+
+    @Test func reverseReversesMultipleItems() {
+        let list = LinkedList.cons(3, LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty)))
+
+        let reversed = reverse(list)
+
+        #expect(length(list: reversed) == 3)
+        #expect(nthOpt(n: 0, list: reversed) == 1)
+        #expect(nthOpt(n: 1, list: reversed) == 2)
+        #expect(nthOpt(n: 2, list: reversed) == 3)
+        #expect(nthOpt(n: 3, list: reversed) == nil)
+    }
 }
