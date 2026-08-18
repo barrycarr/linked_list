@@ -7,6 +7,12 @@
 
 import Foundation
 
+enum LinkedListError: Error {
+    case listTooShort
+    case negativeIndex
+    case listEmpty
+}
+
 class LinkedList<T> {
     fileprivate var head: Node<T>?
     init() {
@@ -62,4 +68,25 @@ func length<T>(list: LinkedList<T>) -> Int {
 
 func isEmpty<T>(list: LinkedList<T>) -> Bool {
     return list.head == nil
+}
+
+func nth<T>(n: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
+    guard n >= 0 else {
+        return .failure(.negativeIndex)
+    }
+    guard !isEmpty(list: list) else {
+        return .failure(.listEmpty)
+    }
+    
+    func getNth(index: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
+        guard let value = head(list: list) else {
+            return .failure(.listTooShort)
+        }
+        if index == 0 {
+            return .success(value)
+        }
+        return getNth(index: index - 1, list: tail(list: list))
+    }
+    
+    return getNth(index: n, list: list)
 }

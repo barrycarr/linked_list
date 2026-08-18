@@ -67,4 +67,87 @@ struct linked_listTests {
         #expect(head(list: returnedList) == 10)
         #expect(!isEmpty(list: returnedList))
     }
+
+    @Test func nthReturnsHeadForZeroIndex() {
+        let list = LinkedList<String>()
+        _ = push(value: "first", list: list)
+        _ = push(value: "second", list: list)
+
+        switch nth(n: 0, list: list) {
+        case .success(let value):
+            #expect(value == "second")
+        case .failure(let error):
+            Issue.record("Expected success, got \(error)")
+        }
+    }
+
+    @Test func nthReturnsValueAtPositiveIndex() {
+        let list = LinkedList<Int>()
+        _ = push(value: 1, list: list)
+        _ = push(value: 2, list: list)
+        _ = push(value: 3, list: list)
+
+        switch nth(n: 2, list: list) {
+        case .success(let value):
+            #expect(value == 1)
+        case .failure(let error):
+            Issue.record("Expected success, got \(error)")
+        }
+    }
+
+    @Test func nthFailsForNegativeIndex() {
+        let list = push(value: 10)
+
+        switch nth(n: -1, list: list) {
+        case .success:
+            Issue.record("Expected negativeIndex failure")
+        case .failure(.negativeIndex):
+            break
+        case .failure(let error):
+            Issue.record("Expected negativeIndex failure, got \(error)")
+        }
+    }
+
+    @Test func nthFailsForEmptyList() {
+        let list = LinkedList<Int>()
+
+        switch nth(n: 0, list: list) {
+        case .success:
+            Issue.record("Expected listEmpty failure")
+        case .failure(.listEmpty):
+            break
+        case .failure(let error):
+            Issue.record("Expected listEmpty failure, got \(error)")
+        }
+    }
+
+    @Test func nthFailsForIndexEqualToLength() {
+        let list = LinkedList<Int>()
+        _ = push(value: 1, list: list)
+        _ = push(value: 2, list: list)
+
+        switch nth(n: 2, list: list) {
+        case .success:
+            Issue.record("Expected listTooShort failure")
+        case .failure(.listTooShort):
+            break
+        case .failure(let error):
+            Issue.record("Expected listTooShort failure, got \(error)")
+        }
+    }
+
+    @Test func nthFailsForIndexGreaterThanLength() {
+        let list = LinkedList<Int>()
+        _ = push(value: 1, list: list)
+        _ = push(value: 2, list: list)
+
+        switch nth(n: 3, list: list) {
+        case .success:
+            Issue.record("Expected listTooShort failure")
+        case .failure(.listTooShort):
+            break
+        case .failure(let error):
+            Issue.record("Expected listTooShort failure, got \(error)")
+        }
+    }
 }
