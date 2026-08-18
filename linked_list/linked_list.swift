@@ -46,9 +46,20 @@ func head<T>(list: LinkedList<T>) -> T? {
     return nil
 }
 
-func tail<T>(list: LinkedList<T>) -> LinkedList<T>? {
+func tail<T>(list: LinkedList<T>) -> LinkedList<T> {
     if list.head == nil {
         return LinkedList<T>()
     }
     return LinkedList<T>(head: list.head?.next)
+}
+
+func length<T>(list: LinkedList<T>) -> Int {
+    if list.head == nil {
+        return 0
+    }
+    return 1 + length(list: tail(list: list))
+}
+
+func isEmpty<T>(list: LinkedList<T>) -> Bool {
+    return list.head == nil
 }
