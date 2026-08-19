@@ -5,8 +5,6 @@
 //  Created by Barry Carr on 17/08/2026.
 //
 
-import Foundation
-
 public func empty<T>() -> LinkedList<T> {
     return .empty
 }

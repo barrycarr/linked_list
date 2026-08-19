@@ -5,12 +5,12 @@
 //  Created by Barry Carr on 19/08/2026.
 //
 
-precedencegroup ConsPrecendence {
+precedencegroup ConsPrecedence {
     associativity: right
     higherThan: AdditionPrecedence
 }
 
-infix operator +|: ConsPrecendence
+infix operator +|: ConsPrecedence
 
 public func +| <T>(value: T, list: LinkedList<T>) -> LinkedList<T> {
     .cons(value, list)
