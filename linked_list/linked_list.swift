@@ -7,72 +7,39 @@
 
 import Foundation
 
-enum LinkedListError: Error {
-    case listTooShort
-    case negativeIndex
-    case listEmpty
-}
-
-indirect enum LinkedList<T> {
-    case empty
-    case cons(T, LinkedList<T>)
-}
-
-precedencegroup ConsPrecendence {
-    associativity: right
-    higherThan: AdditionPrecedence
-}
-
-infix operator +|: ConsPrecendence
-
-func +| <T>(value: T, list: LinkedList<T>) -> LinkedList<T> {
-    .cons(value, list)
-}
-
-precedencegroup ForwardApplication {
-    associativity: left
-    higherThan: AssignmentPrecedence
-}
-
-infix operator |>: ForwardApplication
-
-func |> <T, R>(value: T, function: (T) -> R) -> R {
-    function(value)
-}
-
-func empty<T>() -> LinkedList<T> {
+public func empty<T>() -> LinkedList<T> {
     return .empty
 }
 
-func head<T>(list: LinkedList<T>) -> T? {
+public func head<T>(list: LinkedList<T>) -> T? {
     switch list {
     case .empty: return nil
     case let .cons(value, _): return value
     }
 }
 
-func tail<T>(list: LinkedList<T>) -> LinkedList<T> {
+public func tail<T>(list: LinkedList<T>) -> LinkedList<T> {
     switch list {
     case .empty: return .empty
     case .cons(_, let rest): return rest
     }
 }
 
-func length<T>(list: LinkedList<T>) -> Int {
+public func length<T>(list: LinkedList<T>) -> Int {
     switch list {
     case .empty: return 0
     case let .cons(_, rest): return 1 + length(list: rest)
     }
 }
 
-func isEmpty<T>(list: LinkedList<T>) -> Bool {
+public func isEmpty<T>(list: LinkedList<T>) -> Bool {
     switch list {
     case .cons: return false
     case .empty: return true
     }
 }
 
-func nth<T>(n: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
+public func nth<T>(n: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
     guard n >= 0 else {
         return .failure(.negativeIndex)
     }
@@ -91,26 +58,26 @@ func nth<T>(n: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
     return getNth(index: n, list: list)
 }
 
-func nthOf<T>(_ list: LinkedList<T>) -> (Int) -> Result<T?, LinkedListError> {
+public func nthOf<T>(_ list: LinkedList<T>) -> (Int) -> Result<T?, LinkedListError> {
     { index in nth(n: index, list: list) }
 }
 
-func nthOpt<T>(n: Int, list: LinkedList<T>) -> T? {
+public func nthOpt<T>(n: Int, list: LinkedList<T>) -> T? {
     switch nth(n: n, list: list) {
     case .success(let value): return value
     case .failure: return nil
     }
 }
 
-func nthOfOpt<T>(_ list: LinkedList<T>) -> (Int) -> T? {
+public func nthOfOpt<T>(_ list: LinkedList<T>) -> (Int) -> T? {
     { index in nthOpt(n: index, list: list) }
 }
 
-func singleton<T>(_ value: T) -> LinkedList<T> {
+public func singleton<T>(_ value: T) -> LinkedList<T> {
     .cons(value, .empty)
 }
 
-func reverse<T>(_ list: LinkedList<T>) -> LinkedList<T> {
+public func reverse<T>(_ list: LinkedList<T>) -> LinkedList<T> {
     func reversed(_ remaining: LinkedList<T>, into result: LinkedList<T>) -> LinkedList<T> {
         switch remaining {
         case .empty:
@@ -123,38 +90,32 @@ func reverse<T>(_ list: LinkedList<T>) -> LinkedList<T> {
     return reversed(list, into: .empty)
 }
 
-infix operator <>: AdditionPrecedence
-
-func <> <T>(lhs: LinkedList<T>, rhs: LinkedList<T>) -> LinkedList<T> {
-    append(l0: lhs, l1: rhs)
-}
-
-func append<T>(l0: LinkedList<T>, l1: LinkedList<T>) -> LinkedList<T> {
+public func append<T>(l0: LinkedList<T>, l1: LinkedList<T>) -> LinkedList<T> {
     switch l0 {
     case .empty: return l1
     case .cons(let value, let rest): return .cons(value, append(l0: rest, l1: l1))
     }
 }
 
-func appendTo<T>(_ second: LinkedList<T>) -> (LinkedList<T>) -> LinkedList<T> {
+public func appendTo<T>(_ second: LinkedList<T>) -> (LinkedList<T>) -> LinkedList<T> {
     { first in append(l0: first, l1: second) }
 }
 
-func revAppend<T>(l0: LinkedList<T>, l1: LinkedList<T>) -> LinkedList<T> {
+public func revAppend<T>(l0: LinkedList<T>, l1: LinkedList<T>) -> LinkedList<T> {
     reverse(l0) |> appendTo(l1)
 }
 
-func revAppendTo<T>(_ second: LinkedList<T>) -> (LinkedList<T>) -> LinkedList<T> {
+public func revAppendTo<T>(_ second: LinkedList<T>) -> (LinkedList<T>) -> LinkedList<T> {
     { first in revAppend(l0: first, l1: second) }
 }
 
-func concat<T>(_ lists: LinkedList<LinkedList<T>>) -> LinkedList<T> {
+public func concat<T>(_ lists: LinkedList<LinkedList<T>>) -> LinkedList<T> {
     switch lists {
     case .empty: return .empty
     case .cons(let first, let rest): return append(l0: first, l1: concat(rest))
     }
 }
 
-func flatten<T>(_ lists: LinkedList<LinkedList<T>>) -> LinkedList<T> {
+public func flatten<T>(_ lists: LinkedList<LinkedList<T>>) -> LinkedList<T> {
     concat(lists)
 }
