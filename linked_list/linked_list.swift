@@ -18,6 +18,32 @@ indirect enum LinkedList<T> {
     case cons(T, LinkedList<T>)
 }
 
+precedencegroup ConsPrecendence {
+    associativity: right
+    higherThan: AdditionPrecedence
+}
+
+infix operator +|: ConsPrecendence
+
+func +| <T>(value: T, list: LinkedList<T>) -> LinkedList<T> {
+    .cons(value, list)
+}
+
+precedencegroup ForwardApplication {
+    associativity: left
+    higherThan: AssignmentPrecedence
+}
+
+infix operator |>: ForwardApplication
+
+func |> <T, R>(value: T, function: (T) -> R) -> R {
+    function(value)
+}
+
+func empty<T>() -> LinkedList<T> {
+    return .empty
+}
+
 func head<T>(list: LinkedList<T>) -> T? {
     switch list {
     case .empty: return nil
@@ -65,11 +91,19 @@ func nth<T>(n: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
     return getNth(index: n, list: list)
 }
 
+func nthOf<T>(_ list: LinkedList<T>) -> (Int) -> Result<T?, LinkedListError> {
+    { index in nth(n: index, list: list) }
+}
+
 func nthOpt<T>(n: Int, list: LinkedList<T>) -> T? {
     switch nth(n: n, list: list) {
     case .success(let value): return value
     case .failure: return nil
     }
+}
+
+func nthOfOpt<T>(_ list: LinkedList<T>) -> (Int) -> T? {
+    { index in nthOpt(n: index, list: list) }
 }
 
 func singleton<T>(_ value: T) -> LinkedList<T> {
@@ -87,4 +121,29 @@ func reverse<T>(_ list: LinkedList<T>) -> LinkedList<T> {
     }
 
     return reversed(list, into: .empty)
+}
+
+infix operator <>: AdditionPrecedence
+
+func <> <T>(lhs: LinkedList<T>, rhs: LinkedList<T>) -> LinkedList<T> {
+    append(l0: lhs, l1: rhs)
+}
+
+func append<T>(l0: LinkedList<T>, l1: LinkedList<T>) -> LinkedList<T> {
+    switch l0 {
+    case .empty: return l1
+    case .cons(let value, let rest): return .cons(value, append(l0: rest, l1: l1))
+    }
+}
+
+func appendTo<T>(_ second: LinkedList<T>) -> (LinkedList<T>) -> LinkedList<T> {
+    { first in append(l0: first, l1: second) }
+}
+
+func revAppend<T>(l0: LinkedList<T>, l1: LinkedList<T>) -> LinkedList<T> {
+    reverse(l0) |> appendTo(l1)
+}
+
+func revAppendTo<T>(_ second: LinkedList<T>) -> (LinkedList<T>) -> LinkedList<T> {
+    { first in revAppend(l0: first, l1: second) }
 }
