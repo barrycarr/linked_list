@@ -37,7 +37,7 @@ public func isEmpty<T>(list: LinkedList<T>) -> Bool {
     }
 }
 
-public func nth<T>(n: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
+public func nth<T>(n: Int, list: LinkedList<T>) -> Result<T, LinkedListError> {
     guard n >= 0 else {
         return .failure(.negativeIndex)
     }
@@ -45,7 +45,7 @@ public func nth<T>(n: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
         return .failure(.listEmpty)
     }
     
-    func getNth(index: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
+    func getNth(index: Int, list: LinkedList<T>) -> Result<T, LinkedListError> {
         switch (index, list) {
         case (0, .cons(let value, _)): return .success(value)
         case (_, .empty): return .failure(.listTooShort)
@@ -56,7 +56,7 @@ public func nth<T>(n: Int, list: LinkedList<T>) -> Result<T?, LinkedListError> {
     return getNth(index: n, list: list)
 }
 
-public func nthOf<T>(_ list: LinkedList<T>) -> (Int) -> Result<T?, LinkedListError> {
+public func nthOf<T>(_ list: LinkedList<T>) -> (Int) -> Result<T, LinkedListError> {
     { index in nth(n: index, list: list) }
 }
 

@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "21199CC1-9D73-41C9-8F2A-4A9C7F8A773A",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:linked_list.xcodeproj",
+        "identifier" : "4CA1CB1E30337D770019319F",
+        "name" : "linked_listTests"
+      }
+    }
+  ],
+  "version" : 1
+}
