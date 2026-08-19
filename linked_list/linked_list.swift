@@ -147,3 +147,14 @@ func revAppend<T>(l0: LinkedList<T>, l1: LinkedList<T>) -> LinkedList<T> {
 func revAppendTo<T>(_ second: LinkedList<T>) -> (LinkedList<T>) -> LinkedList<T> {
     { first in revAppend(l0: first, l1: second) }
 }
+
+func concat<T>(_ lists: LinkedList<LinkedList<T>>) -> LinkedList<T> {
+    switch lists {
+    case .empty: return .empty
+    case .cons(let first, let rest): return append(l0: first, l1: concat(rest))
+    }
+}
+
+func flatten<T>(_ lists: LinkedList<LinkedList<T>>) -> LinkedList<T> {
+    concat(lists)
+}

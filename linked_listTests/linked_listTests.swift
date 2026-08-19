@@ -437,4 +437,59 @@ struct linked_listTests {
         #expect(result == 5)
     }
 
+    @Test func concatReturnsEmptyForEmptyListOfLists() {
+        let lists = LinkedList<LinkedList<Int>>.empty
+
+        let result = concat(lists)
+
+        #expect(isEmpty(list: result))
+        #expect(length(list: result) == 0)
+    }
+
+    @Test func concatReturnsSingleNestedList() {
+        let nested = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+        let lists = nested +| LinkedList<LinkedList<Int>>.empty
+
+        let result = concat(lists)
+
+        #expect(length(list: result) == 3)
+        #expect(nthOpt(n: 0, list: result) == 1)
+        #expect(nthOpt(n: 1, list: result) == 2)
+        #expect(nthOpt(n: 2, list: result) == 3)
+        #expect(nthOpt(n: 3, list: result) == nil)
+    }
+
+    @Test func concatAppendsNestedListsInOrder() {
+        let first = 1 +| 2 +| LinkedList<Int>.empty
+        let second = 3 +| LinkedList<Int>.empty
+        let third = 4 +| 5 +| LinkedList<Int>.empty
+        let lists = first +| second +| third +| LinkedList<LinkedList<Int>>.empty
+
+        let result = concat(lists)
+
+        #expect(length(list: result) == 5)
+        #expect(nthOpt(n: 0, list: result) == 1)
+        #expect(nthOpt(n: 1, list: result) == 2)
+        #expect(nthOpt(n: 2, list: result) == 3)
+        #expect(nthOpt(n: 3, list: result) == 4)
+        #expect(nthOpt(n: 4, list: result) == 5)
+        #expect(nthOpt(n: 5, list: result) == nil)
+    }
+
+    @Test func concatSkipsEmptyNestedLists() {
+        let first = LinkedList<Int>.empty
+        let second = 1 +| 2 +| LinkedList<Int>.empty
+        let third = LinkedList<Int>.empty
+        let fourth = 3 +| LinkedList<Int>.empty
+        let lists = first +| second +| third +| fourth +| LinkedList<LinkedList<Int>>.empty
+
+        let result = concat(lists)
+
+        #expect(length(list: result) == 3)
+        #expect(nthOpt(n: 0, list: result) == 1)
+        #expect(nthOpt(n: 1, list: result) == 2)
+        #expect(nthOpt(n: 2, list: result) == 3)
+        #expect(nthOpt(n: 3, list: result) == nil)
+    }
+
 }
