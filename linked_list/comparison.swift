@@ -22,3 +22,13 @@ public func compareLengthWith<T>(_ list: LinkedList<T>, len: Int) -> Int {
         case (.cons(_, let rest), let n): return compareLengthWith(rest, len: n - 1)
     }
 }
+
+public func equal<T>(_ compareFn: LinkedListElementComparison<T>, _ lhs: LinkedList<T>, _ rhs: LinkedList<T>) -> Bool {
+    switch (lhs, rhs) {
+        case (.empty, .empty): return true
+        case (.empty, .cons): return false
+        case (.cons, .empty): return false
+        case (.cons(let l, let lhsRest), .cons(let r, let rhsRest)):
+            return compareFn(l, r) && equal(compareFn, lhsRest, rhsRest)
+    }
+}

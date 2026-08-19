@@ -71,4 +71,50 @@ struct ComparisonTests {
 
         #expect(compareLengthWith(list, len: -1) > 0)
     }
+
+    @Test func equalReturnsTrueForTwoEmptyLists() {
+        let lhs = LinkedList<Int>.empty
+        let rhs = LinkedList<Int>.empty
+
+        #expect(equal(==, lhs, rhs))
+    }
+
+    @Test func equalReturnsTrueWhenAllElementsMatch() {
+        let lhs = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+        let rhs = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        #expect(equal(==, lhs, rhs))
+    }
+
+    @Test func equalReturnsFalseWhenElementsDiffer() {
+        let lhs = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+        let rhs = 1 +| 9 +| 3 +| LinkedList<Int>.empty
+
+        #expect(!equal(==, lhs, rhs))
+    }
+
+    @Test func equalReturnsFalseWhenFirstListIsShorter() {
+        let lhs = 1 +| 2 +| LinkedList<Int>.empty
+        let rhs = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        #expect(!equal(==, lhs, rhs))
+    }
+
+    @Test func equalReturnsFalseWhenFirstListIsLonger() {
+        let lhs = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+        let rhs = 1 +| 2 +| LinkedList<Int>.empty
+
+        #expect(!equal(==, lhs, rhs))
+    }
+
+    @Test func equalUsesTheProvidedComparisonFunction() {
+        let lhs = 1 +| -2 +| 3 +| LinkedList<Int>.empty
+        let rhs = -1 +| 2 +| -3 +| LinkedList<Int>.empty
+
+        let sameMagnitude: LinkedListElementComparison<Int> = { lhs, rhs in
+            abs(lhs) == abs(rhs)
+        }
+
+        #expect(equal(sameMagnitude, lhs, rhs))
+    }
 }
