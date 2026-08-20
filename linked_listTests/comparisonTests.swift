@@ -10,6 +10,16 @@ import Testing
 
 struct ComparisonTests {
 
+    private let intCompare: LinkedListElementCmp<Int> = { lhs, rhs in
+        if lhs < rhs {
+            return -1
+        }
+        if lhs > rhs {
+            return 1
+        }
+        return 0
+    }
+
     @Test func compareLengthsReturnsZeroForListsWithEqualLength() {
         let lhs = 1 +| 2 +| LinkedList<Int>.empty
         let rhs = 10 +| 20 +| LinkedList<Int>.empty
@@ -111,10 +121,77 @@ struct ComparisonTests {
         let lhs = 1 +| -2 +| 3 +| LinkedList<Int>.empty
         let rhs = -1 +| 2 +| -3 +| LinkedList<Int>.empty
 
-        let sameMagnitude: LinkedListElementComparison<Int> = { lhs, rhs in
+        let sameMagnitude: LinkedListElementEq<Int> = { lhs, rhs in
             abs(lhs) == abs(rhs)
         }
 
         #expect(equal(sameMagnitude, lhs, rhs))
+    }
+
+    @Test func compareReturnsZeroForTwoEmptyLists() {
+        let lhs = LinkedList<Int>.empty
+        let rhs = LinkedList<Int>.empty
+
+        #expect(compare(intCompare, lhs, rhs) == 0)
+    }
+
+    @Test func compareReturnsZeroWhenAllElementsMatch() {
+        let lhs = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+        let rhs = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        #expect(compare(intCompare, lhs, rhs) == 0)
+    }
+
+    @Test func compareReturnsNegativeWhenFirstDifferentElementIsSmaller() {
+        let lhs = 1 +| 2 +| 9 +| LinkedList<Int>.empty
+        let rhs = 1 +| 3 +| 0 +| LinkedList<Int>.empty
+
+        #expect(compare(intCompare, lhs, rhs) < 0)
+    }
+
+    @Test func compareReturnsPositiveWhenFirstDifferentElementIsLarger() {
+        let lhs = 1 +| 4 +| 0 +| LinkedList<Int>.empty
+        let rhs = 1 +| 3 +| 9 +| LinkedList<Int>.empty
+
+        #expect(compare(intCompare, lhs, rhs) > 0)
+    }
+
+    @Test func compareReturnsNegativeWhenLeftListEndsAfterEqualPrefix() {
+        let lhs = 1 +| 2 +| LinkedList<Int>.empty
+        let rhs = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        #expect(compare(intCompare, lhs, rhs) < 0)
+    }
+
+    @Test func compareReturnsPositiveWhenRightListEndsAfterEqualPrefix() {
+        let lhs = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+        let rhs = 1 +| 2 +| LinkedList<Int>.empty
+
+        #expect(compare(intCompare, lhs, rhs) > 0)
+    }
+
+    @Test func compareEmptyListIsSmallerThanNonEmptyList() {
+        let lhs = LinkedList<Int>.empty
+        let rhs = 1 +| LinkedList<Int>.empty
+
+        #expect(compare(intCompare, lhs, rhs) < 0)
+        #expect(compare(intCompare, rhs, lhs) > 0)
+    }
+
+    @Test func compareUsesProvidedComparisonFunction() {
+        let lhs = "a" +| "bb" +| LinkedList<String>.empty
+        let rhs = "z" +| "c" +| LinkedList<String>.empty
+
+        let compareLength: LinkedListElementCmp<String> = { lhs, rhs in
+            if lhs.count < rhs.count {
+                return -1
+            }
+            if lhs.count > rhs.count {
+                return 1
+            }
+            return 0
+        }
+
+        #expect(compare(compareLength, lhs, rhs) > 0)
     }
 }

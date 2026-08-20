@@ -23,12 +23,24 @@ public func compareLengthWith<T>(_ list: LinkedList<T>, len: Int) -> Int {
     }
 }
 
-public func equal<T>(_ compareFn: LinkedListElementComparison<T>, _ lhs: LinkedList<T>, _ rhs: LinkedList<T>) -> Bool {
+public func equal<T>(_ eqFn: LinkedListElementEq<T>, _ lhs: LinkedList<T>, _ rhs: LinkedList<T>) -> Bool {
     switch (lhs, rhs) {
         case (.empty, .empty): return true
         case (.empty, .cons): return false
         case (.cons, .empty): return false
         case (.cons(let l, let lhsRest), .cons(let r, let rhsRest)):
-            return compareFn(l, r) && equal(compareFn, lhsRest, rhsRest)
+            return eqFn(l, r) && equal(eqFn, lhsRest, rhsRest)
     }
 }
+
+public func compare<T>(_ cmpFn: LinkedListElementCmp<T>, _ lhs: LinkedList<T>, _ rhs: LinkedList<T>) -> Int {
+    switch (lhs, rhs) {
+        case (.empty, .empty): return 0
+        case (.empty, .cons): return -1
+        case (.cons, .empty): return 1
+        case (.cons(let l, let lhsRest), .cons(let r, let rhsRest)):
+            let cmp = cmpFn(l, r)
+            return cmp != 0 ? cmp : compare(cmpFn, lhsRest, rhsRest)
+    }
+}
+

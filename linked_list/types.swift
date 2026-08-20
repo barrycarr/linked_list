@@ -16,4 +16,5 @@ public indirect enum LinkedList<T> {
     case cons(T, LinkedList<T>)
 }
 
-public typealias LinkedListElementComparison<T> = (T, T) -> Bool
+public typealias LinkedListElementEq<T> = (T, T) -> Bool
+public typealias LinkedListElementCmp<T> = (T, T) -> Int
