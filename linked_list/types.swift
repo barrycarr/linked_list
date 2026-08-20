@@ -22,3 +22,6 @@ public typealias LinkedListIteration<T> = (T) -> Void
 public typealias LinkedListIterationWithIndex<T> = (Int, T) -> Void
 public typealias LinkedListMap<T, U> = (T) -> U
 public typealias LinkedListMapWithIndex<T, U> = (Int, T) -> U
+public typealias LinkedListFilter<T, U> = (T) -> U?
+public typealias LinkedListFilterWithIndex<T, U> = (Int, T) -> U?
+public typealias LinkedListConcatMap<T,U> = (T) -> LinkedList<U>

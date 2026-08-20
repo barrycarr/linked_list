@@ -67,3 +67,73 @@ public func mapIOf<T,U>(_ fn: @escaping LinkedListMapWithIndex<T,U>) -> (LinkedL
     { list in mapI(fn, list) }
 }
 
+public func reverseMap<T, U>(_ fn: LinkedListMap<T,U>, _ list: LinkedList<T>) -> LinkedList<U> {
+    func reversed(_ remaining: LinkedList<T>, into result: LinkedList<U>) -> LinkedList<U> {
+        switch remaining {
+            case .empty:
+                return result
+            case .cons(let value, let rest):
+                return reversed(rest, into: .cons(fn(value), result))
+        }
+    }
+
+    return reversed(list, into: .empty)
+}
+
+// for use with the pipe-forward operator `|>`
+public func reverseMapOf<T, U>(_ fn: @escaping LinkedListMap<T,U>) -> (LinkedList<T>) -> LinkedList<U> {
+    { list in reverseMap(fn, list) }
+}
+
+public func filterMap<T, U>(_ fn: LinkedListFilter<T,U>, _ list: LinkedList<T>) -> LinkedList<U> {
+    switch list {
+        case .empty: return .empty
+        case .cons(let value, let rest):
+            if let r = fn(value) {
+                return .cons(r, filterMap(fn, rest))
+            }
+            else {
+                return filterMap(fn, rest)
+            }
+    }
+}
+
+// for use with the pipe-forward operator `|>`
+public func filterMapOf<T,U>(_ fn: @escaping LinkedListFilter<T,U>) -> (LinkedList<T>) -> LinkedList<U> {
+    { list in filterMap(fn, list) }
+}
+
+public func filterMapI<T, U>(_ fn: LinkedListFilterWithIndex<T,U>, _ list: LinkedList<T>) -> LinkedList<U> {
+    func doFilter(_ idx: Int, _ fn: LinkedListFilterWithIndex<T,U>, _ list: LinkedList<T>) -> LinkedList<U> {
+        switch list {
+                case .empty: return .empty
+                case .cons(let value, let rest):
+                if let r = fn(idx, value) {
+                    return .cons(r, doFilter(idx + 1, fn, rest))
+                }
+                else {
+                    return doFilter(idx + 1, fn, rest)
+                }
+        }
+    }
+    
+    return doFilter(0, fn, list)
+}
+
+// for use with pipe-forward operator `|>`
+public func filterMapIOF<T,U>(_ fn: @escaping LinkedListFilterWithIndex<T,U>) -> (LinkedList<T>) -> LinkedList<U> {
+    { list in filterMapI(fn, list) }
+}
+
+public func concatMap<T, U>(_ fn: LinkedListConcatMap<T,U>, _ list: LinkedList<T>) -> LinkedList<U> {
+    switch list {
+        case .empty: return .empty
+        case .cons(let value, let rest):
+            return append(l0: fn(value), l1: concatMap(fn, rest))
+    }
+}
+
+// for use with pipe-forward operator `|>`
+public func concatMapOf<T, U>(_ fn: @escaping LinkedListConcatMap<T,U>) -> (LinkedList<T>) -> LinkedList<U> {
+    { list in concatMap(fn, list) }
+}
