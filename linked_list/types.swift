@@ -18,3 +18,5 @@ public indirect enum LinkedList<T> {
 
 public typealias LinkedListElementEq<T> = (T, T) -> Bool
 public typealias LinkedListElementCmp<T> = (T, T) -> Int
+public typealias LinkedListIteration<T> = (T) -> Void
+public typealias LinkedListIterationWithIndex<T> = (Int, T) -> Void
