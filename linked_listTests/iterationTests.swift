@@ -551,6 +551,94 @@ struct IterationTests {
         #expect(result == 16)
     }
 
+    @Test func foldLeftMapReturnsAccumulatorAndEmptyListForEmptyList() {
+        let list = LinkedList<Int>.empty
+        var callCount = 0
+
+        let (acc, mapped) = foldLeftMap({ acc, value in
+            callCount += 1
+            return (acc + value, value * 2)
+        }, 42, list)
+
+        #expect(acc == 42)
+        #expect(isEmpty(list: mapped))
+        #expect(length(list: mapped) == 0)
+        #expect(callCount == 0)
+    }
+
+    @Test func foldLeftMapThreadsAccumulatorFromLeftToRight() {
+        let list = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        let (acc, mapped) = foldLeftMap({ acc, value in
+            let newAcc = acc - value
+            return (newAcc, newAcc)
+        }, 0, list)
+
+        #expect(acc == -6)
+        #expect(length(list: mapped) == 3)
+        #expect(nthOpt(n: 0, list: mapped) == -1)
+        #expect(nthOpt(n: 1, list: mapped) == -3)
+        #expect(nthOpt(n: 2, list: mapped) == -6)
+        #expect(nthOpt(n: 3, list: mapped) == nil)
+    }
+
+    @Test func foldLeftMapKeepsMappedValuesInOriginalOrder() {
+        let list = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        let (acc, mapped) = foldLeftMap({ acc, value in
+            (acc + value, value * 10)
+        }, 0, list)
+
+        #expect(acc == 6)
+        #expect(length(list: mapped) == 3)
+        #expect(nthOpt(n: 0, list: mapped) == 10)
+        #expect(nthOpt(n: 1, list: mapped) == 20)
+        #expect(nthOpt(n: 2, list: mapped) == 30)
+        #expect(nthOpt(n: 3, list: mapped) == nil)
+    }
+
+    @Test func foldLeftMapCanReturnDifferentMappedType() {
+        let list = "a" +| "bb" +| "ccc" +| LinkedList<String>.empty
+
+        let (acc, mapped) = foldLeftMap({ acc, value in
+            (acc + value.count, "\(acc):\(value)")
+        }, 0, list)
+
+        #expect(acc == 6)
+        #expect(length(list: mapped) == 3)
+        #expect(nthOpt(n: 0, list: mapped) == "0:a")
+        #expect(nthOpt(n: 1, list: mapped) == "1:bb")
+        #expect(nthOpt(n: 2, list: mapped) == "3:ccc")
+        #expect(nthOpt(n: 3, list: mapped) == nil)
+    }
+
+    @Test func foldLeftMapDoesNotChangeOriginalList() {
+        let list = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        _ = foldLeftMap({ acc, value in
+            (acc + value, value * 2)
+        }, 0, list)
+
+        #expect(nthOpt(n: 0, list: list) == 1)
+        #expect(nthOpt(n: 1, list: list) == 2)
+        #expect(nthOpt(n: 2, list: list) == 3)
+    }
+
+    @Test func foldLeftMapOfCanBeUsedWithPipeForward() {
+        let list = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        let (acc, mapped) = list |> foldLeftMapOf({ acc, value in
+            (acc + value, "value-\(value)")
+        }, 10)
+
+        #expect(acc == 16)
+        #expect(length(list: mapped) == 3)
+        #expect(nthOpt(n: 0, list: mapped) == "value-1")
+        #expect(nthOpt(n: 1, list: mapped) == "value-2")
+        #expect(nthOpt(n: 2, list: mapped) == "value-3")
+        #expect(nthOpt(n: 3, list: mapped) == nil)
+    }
+
     @Test func foldRightReturnsAccumulatorForEmptyList() {
         let list = LinkedList<Int>.empty
         var callCount = 0

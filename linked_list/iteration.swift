@@ -155,6 +155,23 @@ public func foldLeftOf<A,T>(_ fn: @escaping LinkedListFoldLeft<A, T>, _ acc: A) 
     {list in foldLeft(fn, acc, list)}
 }
 
+public func foldLeftMap<A, T, U>(_ fn: LinkedListFoldLeftMap<A, T, U>, _ acc: A, _ list: LinkedList<T>) -> (A, LinkedList<U>) {
+    func doFoldLM(_ fn: LinkedListFoldLeftMap<A, T, U>, _ acc: A, _ list: LinkedList<T>, _ newList: LinkedList<U>) -> (A, LinkedList<U>) {
+        switch list {
+            case .empty: return (acc, reverse(newList))
+            case .cons(let value, let rest):
+                let (newAcc, newValue) = fn(acc, value)
+                return doFoldLM(fn, newAcc, rest, newValue +| newList)
+        }
+    }
+    
+    return doFoldLM(fn, acc, list, LinkedList<U>.empty)
+}
+
+public func foldLeftMapOf<A,T,U>(_ fn: @escaping LinkedListFoldLeftMap<A,T,U>, _ acc: A) -> (LinkedList<T>) -> (A, LinkedList<U>) {
+    {list in foldLeftMap(fn, acc, list)}
+}
+
 // NOT tail Recursive
 public func foldRight<A,T>(_ fn: LinkedListFoldRight<T, A>, _ list: LinkedList<T>, _ acc: A) -> A {
     switch list {
