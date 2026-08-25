@@ -487,4 +487,130 @@ struct IterationTests {
         #expect(nthOpt(n: 3, list: result) == 102)
         #expect(nthOpt(n: 4, list: result) == nil)
     }
+
+    @Test func foldLeftReturnsAccumulatorForEmptyList() {
+        let list = LinkedList<Int>.empty
+        var callCount = 0
+
+        let result = foldLeft({ acc, value in
+            callCount += 1
+            return acc + value
+        }, 42, list)
+
+        #expect(result == 42)
+        #expect(callCount == 0)
+    }
+
+    @Test func foldLeftCombinesValuesFromLeftToRight() {
+        let list = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        let result = foldLeft({ acc, value in
+            acc - value
+        }, 0, list)
+
+        #expect(result == -6)
+    }
+
+    @Test func foldLeftThreadsAccumulatorThroughEachStep() {
+        let list = "a" +| "b" +| "c" +| LinkedList<String>.empty
+
+        let result = foldLeft({ acc, value in
+            acc + "[\(value)]"
+        }, "", list)
+
+        #expect(result == "[a][b][c]")
+    }
+
+    @Test func foldLeftCanReturnDifferentTypeThanListElement() {
+        let list = "one" +| "three" +| "seven" +| LinkedList<String>.empty
+
+        let result = foldLeft({ acc, value in
+            acc + value.count
+        }, 0, list)
+
+        #expect(result == 13)
+    }
+
+    @Test func foldLeftDoesNotChangeOriginalList() {
+        let list = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        _ = foldLeft({ acc, value in acc + value }, 0, list)
+
+        #expect(nthOpt(n: 0, list: list) == 1)
+        #expect(nthOpt(n: 1, list: list) == 2)
+        #expect(nthOpt(n: 2, list: list) == 3)
+    }
+
+    @Test func foldLeftOfCanBeUsedWithPipeForward() {
+        let list = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        let result = list |> foldLeftOf({ acc, value in
+            acc + value
+        }, 10)
+
+        #expect(result == 16)
+    }
+
+    @Test func foldRightReturnsAccumulatorForEmptyList() {
+        let list = LinkedList<Int>.empty
+        var callCount = 0
+
+        let result = foldRight({ value, acc in
+            callCount += 1
+            return value + acc
+        }, list, 42)
+
+        #expect(result == 42)
+        #expect(callCount == 0)
+    }
+
+    @Test func foldRightCombinesValuesFromRightToLeft() {
+        let list = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        let result = foldRight({ value, acc in
+            value - acc
+        }, list, 0)
+
+        #expect(result == 2)
+    }
+
+    @Test func foldRightThreadsAccumulatorThroughEachStep() {
+        let list = "a" +| "b" +| "c" +| LinkedList<String>.empty
+
+        let result = foldRight({ value, acc in
+            "(\(value)\(acc))"
+        }, list, "")
+
+        #expect(result == "(a(b(c)))")
+    }
+
+    @Test func foldRightCanReturnDifferentTypeThanListElement() {
+        let list = "one" +| "three" +| "seven" +| LinkedList<String>.empty
+
+        let result = foldRight({ value, acc in
+            value.count + acc
+        }, list, 0)
+
+        #expect(result == 13)
+    }
+
+    @Test func foldRightDoesNotChangeOriginalList() {
+        let list = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        _ = foldRight({ value, acc in value + acc }, list, 0)
+
+        #expect(nthOpt(n: 0, list: list) == 1)
+        #expect(nthOpt(n: 1, list: list) == 2)
+        #expect(nthOpt(n: 2, list: list) == 3)
+    }
+
+    @Test func foldRightOfCanBeUsedWithPipeForward() {
+        let list = 1 +| 2 +| 3 +| LinkedList<Int>.empty
+
+        let result = list |> foldRightOf({ value, acc in
+            value - acc
+        }, 0)
+
+        #expect(result == 2)
+    }
 }

@@ -25,3 +25,5 @@ public typealias LinkedListMapWithIndex<T, U> = (Int, T) -> U
 public typealias LinkedListFilter<T, U> = (T) -> U?
 public typealias LinkedListFilterWithIndex<T, U> = (Int, T) -> U?
 public typealias LinkedListConcatMap<T,U> = (T) -> LinkedList<U>
+public typealias LinkedListFoldLeft<A, T> = (A, T) -> A
+public typealias LinkedListFoldRight<T, A> = (T, A) -> A

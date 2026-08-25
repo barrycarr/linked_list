@@ -137,3 +137,32 @@ public func concatMap<T, U>(_ fn: LinkedListConcatMap<T,U>, _ list: LinkedList<T
 public func concatMapOf<T, U>(_ fn: @escaping LinkedListConcatMap<T,U>) -> (LinkedList<T>) -> LinkedList<U> {
     { list in concatMap(fn, list) }
 }
+
+public func foldLeft<A,T>(_ fn: LinkedListFoldLeft<A,T>, _ acc: A, _ list: LinkedList<T>) -> A {
+    func doFoldL(_ fn: LinkedListFoldLeft<A, T>, _ acc: A, _ list: LinkedList<T>) -> A {
+        switch list {
+            case .empty: return acc
+            case .cons(let value, let rest):
+                let newAcc = fn(acc, value)
+                return doFoldL(fn, newAcc, rest)
+        }
+    }
+    
+    return doFoldL(fn, acc, list)
+}
+
+public func foldLeftOf<A,T>(_ fn: @escaping LinkedListFoldLeft<A, T>, _ acc: A) -> (LinkedList<T>) -> A {
+    {list in foldLeft(fn, acc, list)}
+}
+
+// NOT tail Recursive
+public func foldRight<A,T>(_ fn: LinkedListFoldRight<T, A>, _ list: LinkedList<T>, _ acc: A) -> A {
+    switch list {
+        case .empty: acc
+        case .cons(let value, let rest): fn(value, foldRight(fn, rest, acc))
+    }
+}
+
+public func foldRightOf<A,T>(_ fn: @escaping LinkedListFoldRight<T, A>, _ acc: A) -> (LinkedList<T>) -> A {
+    { list in foldRight(fn, list, acc) }
+}
