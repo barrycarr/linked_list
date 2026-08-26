@@ -11,6 +11,7 @@ public enum LinkedListError: Error {
     case listEmpty
     case list1TooShort
     case list2TooShort
+    case notFound
 }
 
 public indirect enum LinkedList<T> {

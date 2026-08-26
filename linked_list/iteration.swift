@@ -8,7 +8,7 @@
 public typealias LinkedListMap<T, U> = (T) -> U
 public typealias ListMapWithIndex<T, U> = (Int, T) -> U
 public typealias ListFilter<T, U> = (T) -> U?
-public typealias ListFilterWithIndex<T, U> = (Int, T) -> U?
+public typealias ListFilterIndex<T, U> = (Int, T) -> U?
 public typealias ListConcatMap<T,U> = (T) -> LinkedList<U>
 public typealias ListFoldLeft<A, T> = (A, T) -> A
 public typealias ListFoldLeftMap<A, T, U> = (A, T) -> (A, U)
@@ -113,8 +113,8 @@ public func filterMapOf<T,U>(_ fn: @escaping ListFilter<T,U>) -> (LinkedList<T>)
     { list in filterMap(fn, list) }
 }
 
-public func filterMapI<T, U>(_ fn: ListFilterWithIndex<T,U>, _ list: LinkedList<T>) -> LinkedList<U> {
-    func doFilter(_ idx: Int, _ fn: ListFilterWithIndex<T,U>, _ list: LinkedList<T>) -> LinkedList<U> {
+public func filterMapI<T, U>(_ fn: ListFilterIndex<T,U>, _ list: LinkedList<T>) -> LinkedList<U> {
+    func doFilter(_ idx: Int, _ fn: ListFilterIndex<T,U>, _ list: LinkedList<T>) -> LinkedList<U> {
         switch list {
             case .empty: return .empty
             case .cons(let value, let rest):
@@ -131,7 +131,7 @@ public func filterMapI<T, U>(_ fn: ListFilterWithIndex<T,U>, _ list: LinkedList<
 }
 
 // for use with pipe-forward operator `|>`
-public func filterMapIOf<T,U>(_ fn: @escaping ListFilterWithIndex<T,U>) -> (LinkedList<T>) -> LinkedList<U> {
+public func filterMapIOf<T,U>(_ fn: @escaping ListFilterIndex<T,U>) -> (LinkedList<T>) -> LinkedList<U> {
     { list in filterMapI(fn, list) }
 }
 
