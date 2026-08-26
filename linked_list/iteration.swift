@@ -76,7 +76,7 @@ public func reverseMap<T, U>(_ fn: LinkedListMap<T,U>, _ list: LinkedList<T>) ->
                 return reversed(rest, into: .cons(fn(value), result))
         }
     }
-
+    
     return reversed(list, into: .empty)
 }
 
@@ -106,8 +106,8 @@ public func filterMapOf<T,U>(_ fn: @escaping LinkedListFilter<T,U>) -> (LinkedLi
 public func filterMapI<T, U>(_ fn: LinkedListFilterWithIndex<T,U>, _ list: LinkedList<T>) -> LinkedList<U> {
     func doFilter(_ idx: Int, _ fn: LinkedListFilterWithIndex<T,U>, _ list: LinkedList<T>) -> LinkedList<U> {
         switch list {
-                case .empty: return .empty
-                case .cons(let value, let rest):
+            case .empty: return .empty
+            case .cons(let value, let rest):
                 if let r = fn(idx, value) {
                     return .cons(r, doFilter(idx + 1, fn, rest))
                 }
@@ -121,7 +121,7 @@ public func filterMapI<T, U>(_ fn: LinkedListFilterWithIndex<T,U>, _ list: Linke
 }
 
 // for use with pipe-forward operator `|>`
-public func filterMapIOF<T,U>(_ fn: @escaping LinkedListFilterWithIndex<T,U>) -> (LinkedList<T>) -> LinkedList<U> {
+public func filterMapIOf<T,U>(_ fn: @escaping LinkedListFilterWithIndex<T,U>) -> (LinkedList<T>) -> LinkedList<U> {
     { list in filterMapI(fn, list) }
 }
 
@@ -139,24 +139,27 @@ public func concatMapOf<T, U>(_ fn: @escaping LinkedListConcatMap<T,U>) -> (Link
 }
 
 public func foldLeft<A,T>(_ fn: LinkedListFoldLeft<A,T>, _ acc: A, _ list: LinkedList<T>) -> A {
-    func doFoldL(_ fn: LinkedListFoldLeft<A, T>, _ acc: A, _ list: LinkedList<T>) -> A {
-        switch list {
-            case .empty: return acc
-            case .cons(let value, let rest):
-                let newAcc = fn(acc, value)
-                return doFoldL(fn, newAcc, rest)
-        }
+    switch list {
+        case .empty: return acc
+        case .cons(let value, let rest):
+            let newAcc = fn(acc, value)
+            return foldLeft(fn, newAcc, rest)
     }
-    
-    return doFoldL(fn, acc, list)
 }
 
 public func foldLeftOf<A,T>(_ fn: @escaping LinkedListFoldLeft<A, T>, _ acc: A) -> (LinkedList<T>) -> A {
     {list in foldLeft(fn, acc, list)}
 }
 
-public func foldLeftMap<A, T, U>(_ fn: LinkedListFoldLeftMap<A, T, U>, _ acc: A, _ list: LinkedList<T>) -> (A, LinkedList<U>) {
-    func doFoldLM(_ fn: LinkedListFoldLeftMap<A, T, U>, _ acc: A, _ list: LinkedList<T>, _ newList: LinkedList<U>) -> (A, LinkedList<U>) {
+public func foldLeftMap<A, T, U>(
+    _ fn: LinkedListFoldLeftMap<A, T, U>,
+    _ acc: A,
+    _ list: LinkedList<T>) -> (A, LinkedList<U>) {
+    func doFoldLM(
+        _ fn: LinkedListFoldLeftMap<A, T, U>,
+        _ acc: A,
+        _ list: LinkedList<T>,
+        _ newList: LinkedList<U>) -> (A, LinkedList<U>) {
         switch list {
             case .empty: return (acc, reverse(newList))
             case .cons(let value, let rest):

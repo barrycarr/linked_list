@@ -390,7 +390,7 @@ struct IterationTests {
     @Test func filterMapIOfCanBeUsedWithPipeForward() {
         let list = 1 +| 2 +| 3 +| 4 +| LinkedList<Int>.empty
 
-        let result = list |> filterMapIOF { index, value in
+        let result = list |> filterMapIOf { index, value in
             value > 2 ? "value-\(index)-\(value)" : nil
         }
 
