@@ -14,7 +14,7 @@ public typealias ListFoldLeft<A, T> = (A, T) -> A
 public typealias ListFoldLeftMap<A, T, U> = (A, T) -> (A, U)
 public typealias ListFoldRight<T, A> = (T, A) -> A
 
-public func iter<T>(_ fn: ListIteration<T>, _ list: LinkedList<T>) -> Void {
+public func iter<T>(_ fn: ListIter<T>, _ list: LinkedList<T>) -> Void {
     switch list {
         case .empty: return
         case .cons(let value, let rest):
@@ -24,12 +24,12 @@ public func iter<T>(_ fn: ListIteration<T>, _ list: LinkedList<T>) -> Void {
 }
 
 // for use with pipe-forward operator `|>`
-public func iterOf<T>(_ fn: @escaping ListIteration<T>) -> (LinkedList<T>) -> Void {
+public func iterOf<T>(_ fn: @escaping ListIter<T>) -> (LinkedList<T>) -> Void {
     { list in iter(fn, list) }
 }
 
-public func iterI<T>(_ fn: ListIterationWithIndex<T>, _ list: LinkedList<T>) -> Void {
-    func doIter( _ idx: Int, _ fn: ListIterationWithIndex<T>, _ list: LinkedList<T>) -> Void {
+public func iterI<T>(_ fn: ListIterIndex<T>, _ list: LinkedList<T>) -> Void {
+    func doIter( _ idx: Int, _ fn: ListIterIndex<T>, _ list: LinkedList<T>) -> Void {
         switch list {
             case .empty: return
             case .cons(let value, let rest):
@@ -42,7 +42,7 @@ public func iterI<T>(_ fn: ListIterationWithIndex<T>, _ list: LinkedList<T>) -> 
 }
 
 // for use with pipe-forward operator `|>`
-public func iterIOf<T>(_ fn: @escaping ListIterationWithIndex<T>) -> (LinkedList<T>) -> Void {
+public func iterIOf<T>(_ fn: @escaping ListIterIndex<T>) -> (LinkedList<T>) -> Void {
     { list in iterI(fn, list) }
 }
 
