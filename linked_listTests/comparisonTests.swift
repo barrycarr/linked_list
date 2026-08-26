@@ -10,7 +10,7 @@ import Testing
 
 struct ComparisonTests {
 
-    private let intCompare: LinkedListElementCmp<Int> = { lhs, rhs in
+    private let intCompare: ListElementCmp<Int> = { lhs, rhs in
         if lhs < rhs {
             return -1
         }
@@ -121,7 +121,7 @@ struct ComparisonTests {
         let lhs = 1 +| -2 +| 3 +| LinkedList<Int>.empty
         let rhs = -1 +| 2 +| -3 +| LinkedList<Int>.empty
 
-        let sameMagnitude: LinkedListElementEq<Int> = { lhs, rhs in
+        let sameMagnitude: ListElementEq<Int> = { lhs, rhs in
             abs(lhs) == abs(rhs)
         }
 
@@ -182,7 +182,7 @@ struct ComparisonTests {
         let lhs = "a" +| "bb" +| LinkedList<String>.empty
         let rhs = "z" +| "c" +| LinkedList<String>.empty
 
-        let compareLength: LinkedListElementCmp<String> = { lhs, rhs in
+        let compareLength: ListElementCmp<String> = { lhs, rhs in
             if lhs.count < rhs.count {
                 return -1
             }

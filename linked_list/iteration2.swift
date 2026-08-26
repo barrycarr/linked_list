@@ -4,8 +4,14 @@
 //
 //  Created by Barry Carr on 26/08/2026.
 //
+
+public typealias ListIteration2<T1, T2> = (T1, T2) -> Void
+public typealias ListMap2<T1, T2, U> = (T1, T2) -> U
+public typealias ListFoldLeft2<A, T1, T2> = (A, T1, T2) -> A
+public typealias ListFoldRight2<T1, T2, A> = (T1, T2, A) -> A
+
 public func iter2<T1, T2>(
-    _ fn: LinkedListIteration2<T1, T2>,
+    _ fn: ListIteration2<T1, T2>,
     _ l1: LinkedList<T1>,
     _ l2: LinkedList<T2>) -> Result<Void, LinkedListError> {
     switch (l1, l2) {
@@ -19,11 +25,11 @@ public func iter2<T1, T2>(
 }
 
 public func revMap2<T1, T2, U>(
-    _ fn: LinkedListMap2<T1, T2, U>,
+    _ fn: ListMap2<T1, T2, U>,
     _ l1: LinkedList<T1>,
     _ l2: LinkedList<T2>) -> Result<LinkedList<U>, LinkedListError> {
     func doRevMap2(
-        _ fn: LinkedListMap2<T1, T2, U>,
+        _ fn: ListMap2<T1, T2, U>,
         _ l1: LinkedList<T1>,
         _ l2: LinkedList<T2>,
         _ res: LinkedList<U>) -> Result<LinkedList<U>, LinkedListError> {
@@ -40,14 +46,14 @@ public func revMap2<T1, T2, U>(
 }
 
 public func map2<T1, T2, U>(
-    _ fn: LinkedListMap2<T1, T2, U>,
+    _ fn: ListMap2<T1, T2, U>,
     _ l1: LinkedList<T1>,
     _ l2: LinkedList<T2>) -> Result<LinkedList<U>, LinkedListError> {
         revMap2(fn, l1, l2).map(reverse)
 }
 
 public func foldLeft2<A, T1, T2>(
-    _ fn: LinkedListFoldLeft2<A, T1, T2>,
+    _ fn: ListFoldLeft2<A, T1, T2>,
     _ acc: A,
     _ l1: LinkedList<T1>,
     _ l2: LinkedList<T2>) -> Result<A, LinkedListError> {
@@ -63,7 +69,7 @@ public func foldLeft2<A, T1, T2>(
 
 // NOT tail Recursive
 public func foldRight2<T1, T2, A>(
-    _ fn: LinkedListFoldRight2<T1, T2, A>,
+    _ fn: ListFoldRight2<T1, T2, A>,
     _ l1: LinkedList<T1>,
     _ l2: LinkedList<T2>,
     _ acc: A) -> Result<A, LinkedListError> {

@@ -4,6 +4,12 @@
 //
 //  Created by Barry Carr on 19/08/2026.
 //
+
+public typealias ListElementEq<T> = (T, T) -> Bool
+public typealias ListElementCmp<T> = (T, T) -> Int
+public typealias ListIteration<T> = (T) -> Void
+public typealias ListIterationWithIndex<T> = (Int, T) -> Void
+
 public func compareLengths<T>(_ lhs: LinkedList<T>, _ rhs: LinkedList<T>) -> Int {
     switch (lhs, rhs) {
         case (.empty, .empty): return 0
@@ -23,7 +29,7 @@ public func compareLengthWith<T>(_ list: LinkedList<T>, len: Int) -> Int {
     }
 }
 
-public func equal<T>(_ eqFn: LinkedListElementEq<T>, _ lhs: LinkedList<T>, _ rhs: LinkedList<T>) -> Bool {
+public func equal<T>(_ eqFn: ListElementEq<T>, _ lhs: LinkedList<T>, _ rhs: LinkedList<T>) -> Bool {
     switch (lhs, rhs) {
         case (.empty, .empty): return true
         case (.empty, .cons): return false
@@ -33,7 +39,7 @@ public func equal<T>(_ eqFn: LinkedListElementEq<T>, _ lhs: LinkedList<T>, _ rhs
     }
 }
 
-public func compare<T>(_ cmpFn: LinkedListElementCmp<T>, _ lhs: LinkedList<T>, _ rhs: LinkedList<T>) -> Int {
+public func compare<T>(_ cmpFn: ListElementCmp<T>, _ lhs: LinkedList<T>, _ rhs: LinkedList<T>) -> Int {
     switch (lhs, rhs) {
         case (.empty, .empty): return 0
         case (.empty, .cons): return -1
