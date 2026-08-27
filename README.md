@@ -112,6 +112,42 @@ forAll2({ lhs, rhs in lhs == rhs }, left, right)
 exists2({ lhs, rhs in lhs < rhs }, left, right)
 ```
 
+## Association Lists
+
+Association-list helpers work on lists of key/value tuples:
+
+```swift
+let entries =
+    ("one", 1)
+    +| ("two", 2)
+    +| ("three", 3)
+    +| LinkedList<(String, Int)>.empty
+
+let value = assocOpt("two", entries)
+let result = assoc("two", entries)
+let exists = memAssoc("two", entries)
+let removed = removeAssoc("two", entries)
+```
+
+`assoc` returns a `Result`, while `assocOpt` returns `nil` when the key is not found. `removeAssoc` removes the first matching binding and preserves the rest of the list.
+
+The `assq` variants use object identity with `===` instead of value equality:
+
+```swift
+let value = assqOpt(objectKey, entries)
+let result = assq(objectKey, entries)
+let exists = memAssq(objectKey, entries)
+let removed = removeAssq(objectKey, entries)
+```
+
+Pipe-forward helpers are available for both equality and identity variants:
+
+```swift
+let value = entries |> assocOptOf("two")
+let exists = entries |> memAssocOf("two")
+let removed = entries |> removeAssocOf("two")
+```
+
 ## Manipulation
 
 ```swift
@@ -167,4 +203,4 @@ open linked_list.xcodeproj
 
 Then run the `linked_list` test plan from Xcode.
 
-The current test suite covers the public list functions across basic operations, comparison, iteration, two-list iteration, scanning, searching, manipulation, and operators.
+The current test suite covers the public list functions across basic operations, comparison, iteration, two-list iteration, scanning, searching, association lists, manipulation, and operators.

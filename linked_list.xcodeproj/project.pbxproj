@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C54A16F30408E5D00A85E47 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4C54A16E30408E5D00A85E47 /* README.md */; };
 		4CA1CB2030337D770019319F /* linked_list.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA1CB1430337D770019319F /* linked_list.framework */; };
 /* End PBXBuildFile section */
 
@@ -21,6 +22,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C54A16E30408E5D00A85E47 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4C8631103036265C00ACD1F2 /* linked_list.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = linked_list.xctestplan; sourceTree = "<group>"; };
 		4CA1CB1430337D770019319F /* linked_list.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = linked_list.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA1CB1F30337D770019319F /* linked_listTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = linked_listTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +63,7 @@
 		4CA1CB0A30337D770019319F = {
 			isa = PBXGroup;
 			children = (
+				4C54A16E30408E5D00A85E47 /* README.md */,
 				4C8631103036265C00ACD1F2 /* linked_list.xctestplan */,
 				4CA1CB1630337D770019319F /* linked_list */,
 				4CA1CB2330337D770019319F /* linked_listTests */,
@@ -179,6 +182,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C54A16F30408E5D00A85E47 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
