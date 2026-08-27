@@ -216,6 +216,37 @@ let pairs = combine(numbers, words)
 
 `combine` returns `Result` because it fails when the input lists have different lengths.
 
+## Sorting
+
+Sorting functions take a comparison closure that returns a negative value when the first value is smaller, zero when the values compare equal, and a positive value when the first value is greater:
+
+```swift
+let sorted = sort({ lhs, rhs in lhs - rhs }, list)
+let descending = sort({ lhs, rhs in rhs - lhs }, list)
+```
+
+`stableSort` and `fastSort` are aliases for the same stable merge-sort implementation:
+
+```swift
+let sorted = stableSort({ lhs, rhs in lhs - rhs }, list)
+let alsoSorted = fastSort({ lhs, rhs in lhs - rhs }, list)
+```
+
+`merge` combines two lists that are already sorted according to the same comparison function:
+
+```swift
+let merged = merge({ lhs, rhs in lhs - rhs }, leftSorted, rightSorted)
+```
+
+Pipe-forward helpers are available:
+
+```swift
+let sorted = list |> sortOf { lhs, rhs in lhs - rhs }
+let stable = list |> stableSortOf { lhs, rhs in lhs - rhs }
+let fast = list |> fastSortOf { lhs, rhs in lhs - rhs }
+let merged = rightSorted |> mergeOf({ lhs, rhs in lhs - rhs }, leftSorted)
+```
+
 ## Comparison
 
 ```swift
@@ -237,4 +268,4 @@ open linked_list.xcodeproj
 
 Then run the `linked_list` test plan from Xcode.
 
-The current test suite covers the public list functions across basic operations, comparison, iteration, two-list iteration, pair helpers, scanning, searching, association lists, manipulation, and operators.
+The current test suite covers the public list functions across basic operations, comparison, iteration, two-list iteration, pair helpers, scanning, searching, association lists, manipulation, sorting, and operators.
