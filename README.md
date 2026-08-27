@@ -38,6 +38,30 @@ let emptyList: LinkedList<Int> = empty()
 let oneItem = singleton(42)
 ```
 
+## Swift Sequences And Collections
+
+`LinkedList` conforms to Swift's `Sequence` protocol, so it can be used in `for` loops and with standard library APIs that consume sequences:
+
+```swift
+for value in list {
+    print(value)
+}
+
+let values = Array(list)
+```
+
+Conversion helpers are available for common Swift collection and sequence types:
+
+```swift
+let fromArray = ofArray([1, 2, 3])
+let fromCollection = ofCollection([1, 2, 3][1...])
+let fromSequence = ofSeq(1...3)
+
+let array = toArray(list)
+```
+
+`ofSeq` accepts any `Sequence`; `ofCollection` accepts collection types such as arrays, array slices, sets, and ranges.
+
 ## Operators
 
 | Operator | Purpose | Example |
@@ -268,4 +292,4 @@ open linked_list.xcodeproj
 
 Then run the `linked_list` test plan from Xcode.
 
-The current test suite covers the public list functions across basic operations, comparison, iteration, two-list iteration, pair helpers, scanning, searching, association lists, manipulation, sorting, and operators.
+The current test suite covers the public list functions across basic operations, comparison, iteration, two-list iteration, pair helpers, scanning, searching, association lists, manipulation, sorting, sequences, conversions, and operators.
