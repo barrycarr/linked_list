@@ -182,6 +182,40 @@ foldRight2({ lhs, rhs, acc in acc + lhs + rhs }, left, right, 0)
 
 These functions return `Result` where mismatched input lengths are possible.
 
+## Pair Helpers
+
+Pair helpers convert between lists of tuples and tuples of lists:
+
+```swift
+let pairs =
+    (1, "one")
+    +| (2, "two")
+    +| (3, "three")
+    +| LinkedList<(Int, String)>.empty
+
+let (numbers, words) = split(pairs)
+```
+
+`splitMap` maps each input value to a pair, then splits the pair components into separate lists:
+
+```swift
+let (lengths, uppercased) = splitMap({ word in
+    (word.count, word.uppercased())
+}, words)
+
+let piped = words |> splitMapOf { word in
+    (word.count, word.uppercased())
+}
+```
+
+`combine` zips two lists into a list of tuples:
+
+```swift
+let pairs = combine(numbers, words)
+```
+
+`combine` returns `Result` because it fails when the input lists have different lengths.
+
 ## Comparison
 
 ```swift
@@ -203,4 +237,4 @@ open linked_list.xcodeproj
 
 Then run the `linked_list` test plan from Xcode.
 
-The current test suite covers the public list functions across basic operations, comparison, iteration, two-list iteration, scanning, searching, association lists, manipulation, and operators.
+The current test suite covers the public list functions across basic operations, comparison, iteration, two-list iteration, pair helpers, scanning, searching, association lists, manipulation, and operators.
