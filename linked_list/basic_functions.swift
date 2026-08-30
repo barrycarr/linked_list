@@ -12,7 +12,7 @@ public func empty<T>() -> LinkedList<T> {
 public func head<T>(list: LinkedList<T>) -> T? {
     switch list {
     case .empty: return nil
-    case let .cons(value, _): return value
+    case .cons(let value, _): return value
     }
 }
 
@@ -26,7 +26,7 @@ public func tail<T>(list: LinkedList<T>) -> LinkedList<T> {
 public func length<T>(list: LinkedList<T>) -> Int {
     switch list {
     case .empty: return 0
-    case let .cons(_, rest): return 1 + length(list: rest)
+    case .cons(_, let rest): return 1 + length(list: rest)
     }
 }
 
@@ -44,7 +44,7 @@ public func nth<T>(n: Int, list: LinkedList<T>) -> Result<T, LinkedListError> {
     guard !isEmpty(list: list) else {
         return .failure(.listEmpty)
     }
-    
+
     func getNth(index: Int, list: LinkedList<T>) -> Result<T, LinkedListError> {
         switch (index, list) {
         case (0, .cons(let value, _)): return .success(value)
@@ -52,7 +52,7 @@ public func nth<T>(n: Int, list: LinkedList<T>) -> Result<T, LinkedListError> {
         case (let index, .cons(_, let rest)): return getNth(index: index - 1, list: rest)
         }
     }
-    
+
     return getNth(index: n, list: list)
 }
 

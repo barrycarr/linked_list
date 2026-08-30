@@ -24,10 +24,10 @@ public func findOf<T>(_ fn: @escaping ListPredicate<T>) -> (LinkedList<T>) -> Re
 
 public func findOpt<T>(_ fn: ListPredicate<T>, _ list: LinkedList<T>) -> T? {
     switch list {
-        case .empty: return nil
-        case .cons(let val, let rest):
-            if fn(val) { return val }
-            return findOpt(fn, rest)
+    case .empty: return nil
+    case .cons(let val, let rest):
+        if fn(val) { return val }
+        return findOpt(fn, rest)
     }
 }
 
@@ -40,10 +40,10 @@ public func findOptOf<T>(_ fn: @escaping ListPredicate<T>) -> (LinkedList<T>) ->
 public func findIndex<T>(_ fn: ListPredicate<T>, _ list: LinkedList<T>) -> Int? {
     func doFindIndex(_ list: LinkedList<T>, _ index: Int) -> Int? {
         switch list {
-            case .empty: return nil
-            case .cons(let val, let rest):
-                if fn(val) { return index }
-                return doFindIndex(rest, index + 1)
+        case .empty: return nil
+        case .cons(let val, let rest):
+            if fn(val) { return index }
+            return doFindIndex(rest, index + 1)
         }
     }
     return doFindIndex(list, 0)
@@ -51,20 +51,20 @@ public func findIndex<T>(_ fn: ListPredicate<T>, _ list: LinkedList<T>) -> Int? 
 
 public func findIndexOf<T>(_ fn: @escaping ListPredicate<T>) -> (LinkedList<T>) -> Int? {
     { list in
-        findIndex(fn, list) 
+        findIndex(fn, list)
     }
 }
 
-public func findMap<T, U>(_ fn: ListFindMap<T,U>, _ list: LinkedList<T>) -> U? {
+public func findMap<T, U>(_ fn: ListFindMap<T, U>, _ list: LinkedList<T>) -> U? {
     switch list {
-        case .empty: return nil
-        case .cons(let val, let rest):
-            if let result = fn(val) { return result }
-            return findMap(fn, rest)
+    case .empty: return nil
+    case .cons(let val, let rest):
+        if let result = fn(val) { return result }
+        return findMap(fn, rest)
     }
 }
 
-public func findMapOf<T, U>(_ fn: @escaping ListFindMap<T,U>) -> (LinkedList<T>) -> U? {
+public func findMapOf<T, U>(_ fn: @escaping ListFindMap<T, U>) -> (LinkedList<T>) -> U? {
     { list in
         findMap(fn, list)
     }
@@ -73,13 +73,13 @@ public func findMapOf<T, U>(_ fn: @escaping ListFindMap<T,U>) -> (LinkedList<T>)
 public func findMapI<T, U>(_ fn: ListFindMapI<T, U>, _ list: LinkedList<T>) -> U? {
     func doFindMapI(_ list: LinkedList<T>, _ idx: Int) -> U? {
         switch list {
-            case .empty: return nil
-            case .cons(let val, let rest):
-                if let result = fn(idx, val) {return result}
-                return doFindMapI(rest, idx + 1)
+        case .empty: return nil
+        case .cons(let val, let rest):
+            if let result = fn(idx, val) { return result }
+            return doFindMapI(rest, idx + 1)
         }
     }
-    
+
     return doFindMapI(list, 0)
 }
 
@@ -92,15 +92,15 @@ public func findMapIOf<T, U>(_ fn: @escaping ListFindMapI<T, U>) -> (LinkedList<
 public func filter<T>(_ fn: ListPredicate<T>, _ list: LinkedList<T>) -> LinkedList<T> {
     func doFilter(_ list: LinkedList<T>, _ res: LinkedList<T>) -> LinkedList<T> {
         switch list {
-            case .empty: return reverse(res)
-            case .cons(let val, let rest):
-                if fn(val) {
-                    return doFilter(rest, val +| res)
-                }
-                return doFilter(rest, res)
+        case .empty: return reverse(res)
+        case .cons(let val, let rest):
+            if fn(val) {
+                return doFilter(rest, val +| res)
+            }
+            return doFilter(rest, res)
         }
     }
-    
+
     return doFilter(list, LinkedList<T>.empty)
 }
 
@@ -123,15 +123,15 @@ public func findAllOf<T>(_ fn: @escaping ListPredicate<T>) -> (LinkedList<T>) ->
 public func filterI<T>(_ fn: ListPredicateI<T>, _ list: LinkedList<T>) -> LinkedList<T> {
     func doFilterI(_ list: LinkedList<T>, _ res: LinkedList<T>, _ idx: Int) -> LinkedList<T> {
         switch list {
-            case .empty: return reverse(res)
-            case .cons(let val, let rest):
-                if fn(idx, val) {
-                    return doFilterI(rest, val +| res, idx + 1)
-                }
-                return doFilterI(rest, res, idx + 1)
+        case .empty: return reverse(res)
+        case .cons(let val, let rest):
+            if fn(idx, val) {
+                return doFilterI(rest, val +| res, idx + 1)
+            }
+            return doFilterI(rest, res, idx + 1)
         }
     }
-    
+
     return doFilterI(list, LinkedList<T>.empty, 0)
 }
 

@@ -11,11 +11,11 @@ extension LinkedList: Sequence {
 
         return AnyIterator {
             switch current {
-                case .empty:
-                    return nil
-                case .cons(let value, let rest):
-                    current = rest
-                    return value
+            case .empty:
+                return nil
+            case .cons(let value, let rest):
+                current = rest
+                return value
             }
         }
     }

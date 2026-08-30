@@ -1,6 +1,6 @@
 //
 //  types.swift
-//  
+//
 //
 //  Created by Barry Carr on 19/08/2026.
 //
