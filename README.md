@@ -1,6 +1,8 @@
 # linked_list
 
-An OCaml-inspired immutable linked list library for Swift.
+An OCaml-inspired immutable linked list library for Swift. It's based on the list module in OCaml 5.5
+
+I wrote this to learn Swift, I don't expect anyone to have a use for this other than for interest and reference.   
 
 The core type is a recursive enum:
 
@@ -62,6 +64,10 @@ let array = toArray(list)
 
 `ofSeq` accepts any `Sequence`; `ofCollection` accepts collection types such as arrays, array slices, sets, and ranges.
 
+## Documentation
+
+Public types and functions include Swift documentation comments. In Xcode, use Quick Help or build generated documentation for detailed behavior, parameters, return values, and failure cases.
+
 ## Operators
 
 | Operator | Purpose | Example |
@@ -75,14 +81,14 @@ let array = toArray(list)
 The library includes OCaml-style list helpers:
 
 ```swift
-head(list: list)
-tail(list: list)
-length(list: list)
-isEmpty(list: list)
-nth(n: 2, list: list)
-nthOpt(n: 2, list: list)
+head(list)
+tail(list)
+length(list)
+isEmpty(list)
+nth(2, list)
+nthOpt(2, list)
 reverse(list)
-append(l0: left, l1: right)
+append(left, right)
 concat(lists)
 flatten(lists)
 ```
