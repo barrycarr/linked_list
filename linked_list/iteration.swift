@@ -112,19 +112,19 @@ public func filterMapOf<T, U>(_ fn: @escaping ListFilter<T, U>) -> (LinkedList<T
 }
 
 public func filterMapI<T, U>(_ fn: ListFilterIndex<T, U>, _ list: LinkedList<T>) -> LinkedList<U> {
-    func doFilter(_ idx: Int, _ fn: ListFilterIndex<T, U>, _ list: LinkedList<T>) -> LinkedList<U> {
+    func doFilter(_ idx: Int,_ list: LinkedList<T>) -> LinkedList<U> {
         switch list {
         case .empty: return .empty
         case .cons(let value, let rest):
             if let r = fn(idx, value) {
-                return .cons(r, doFilter(idx + 1, fn, rest))
+                return .cons(r, doFilter(idx + 1, rest))
             } else {
-                return doFilter(idx + 1, fn, rest)
+                return doFilter(idx + 1, rest)
             }
         }
     }
 
-    return doFilter(0, fn, list)
+    return doFilter(0, list)
 }
 
 // for use with pipe-forward operator `|>`
@@ -164,7 +164,6 @@ public func foldLeftMap<A, T, U>(
     _ list: LinkedList<T>
 ) -> (A, LinkedList<U>) {
     func doFoldLM(
-        _ fn: ListFoldLeftMap<A, T, U>,
         _ acc: A,
         _ list: LinkedList<T>,
         _ newList: LinkedList<U>
@@ -173,11 +172,11 @@ public func foldLeftMap<A, T, U>(
         case .empty: return (acc, reverse(newList))
         case .cons(let value, let rest):
             let (newAcc, newValue) = fn(acc, value)
-            return doFoldLM(fn, newAcc, rest, newValue +| newList)
+            return doFoldLM(newAcc, rest, newValue +| newList)
         }
     }
 
-    return doFoldLM(fn, acc, list, LinkedList<U>.empty)
+    return doFoldLM(acc, list, LinkedList<U>.empty)
 }
 
 public func foldLeftMapOf<A, T, U>(_ fn: @escaping ListFoldLeftMap<A, T, U>, _ acc: A) -> (LinkedList<T>) -> (

@@ -76,16 +76,16 @@ public func singleton<T>(_ value: T) -> LinkedList<T> {
 }
 
 public func reverse<T>(_ list: LinkedList<T>) -> LinkedList<T> {
-    func reversed(_ remaining: LinkedList<T>, into result: LinkedList<T>) -> LinkedList<T> {
+    func reversed(_ remaining: LinkedList<T>, _ result: LinkedList<T>) -> LinkedList<T> {
         switch remaining {
         case .empty:
             return result
         case .cons(let value, let rest):
-            return reversed(rest, into: .cons(value, result))
+            return reversed(rest, .cons(value, result))
         }
     }
 
-    return reversed(list, into: .empty)
+    return reversed(list, .empty)
 }
 
 public func append<T>(l0: LinkedList<T>, l1: LinkedList<T>) -> LinkedList<T> {

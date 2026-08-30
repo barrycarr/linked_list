@@ -31,7 +31,6 @@ public func revMap2<T1, T2, U>(
     _ l2: LinkedList<T2>
 ) -> Result<LinkedList<U>, LinkedListError> {
     func doRevMap2(
-        _ fn: ListMap2<T1, T2, U>,
         _ l1: LinkedList<T1>,
         _ l2: LinkedList<T2>,
         _ res: LinkedList<U>
@@ -42,10 +41,10 @@ public func revMap2<T1, T2, U>(
         case (.cons, .empty): return .failure(.list2TooShort)
         case (.cons(let v1, let r1), .cons(let v2, let r2)):
             let newVal = fn(v1, v2)
-            return doRevMap2(fn, r1, r2, newVal +| res)
+            return doRevMap2(r1, r2, newVal +| res)
         }
     }
-    return doRevMap2(fn, l1, l2, LinkedList<U>.empty)
+    return doRevMap2(l1, l2, LinkedList<U>.empty)
 }
 
 public func map2<T1, T2, U>(
