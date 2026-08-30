@@ -11,9 +11,9 @@ import Testing
 struct PairsTests {
     private func expectList<T: Equatable>(_ list: LinkedList<T>, equals values: [T]) {
         for (index, value) in values.enumerated() {
-            #expect(nthOpt(n: index, list: list) == value)
+            #expect(nthOpt(index, list) == value)
         }
-        #expect(nthOpt(n: values.count, list: list) == nil)
+        #expect(nthOpt(values.count, list) == nil)
     }
 
     @Test func splitReturnsTwoEmptyListsForEmptyList() {
@@ -21,8 +21,8 @@ struct PairsTests {
 
         let (left, right) = split(list)
 
-        #expect(isEmpty(list: left))
-        #expect(isEmpty(list: right))
+        #expect(isEmpty(left))
+        #expect(isEmpty(right))
     }
 
     @Test func splitSeparatesPairElementsInOriginalOrder() {
@@ -48,11 +48,11 @@ struct PairsTests {
 
         _ = split(list)
 
-        #expect(nthOpt(n: 0, list: list)?.0 == 1)
-        #expect(nthOpt(n: 0, list: list)?.1 == "one")
-        #expect(nthOpt(n: 1, list: list)?.0 == 2)
-        #expect(nthOpt(n: 1, list: list)?.1 == "two")
-        #expect(nthOpt(n: 2, list: list) == nil)
+        #expect(nthOpt(0, list)?.0 == 1)
+        #expect(nthOpt(0, list)?.1 == "one")
+        #expect(nthOpt(1, list)?.0 == 2)
+        #expect(nthOpt(1, list)?.1 == "two")
+        #expect(nthOpt(2, list) == nil)
     }
 
     @Test func splitMapReturnsTwoEmptyListsForEmptyList() {
@@ -64,8 +64,8 @@ struct PairsTests {
             return (value, String(value))
         }, list)
 
-        #expect(isEmpty(list: left))
-        #expect(isEmpty(list: right))
+        #expect(isEmpty(left))
+        #expect(isEmpty(right))
         #expect(callCount == 0)
     }
 
@@ -129,7 +129,7 @@ struct PairsTests {
         let result = combine(left, right)
 
         if case .success(let list) = result {
-            #expect(isEmpty(list: list))
+            #expect(isEmpty(list))
         } else {
             #expect(Bool(false))
         }
@@ -142,13 +142,13 @@ struct PairsTests {
         let result = combine(left, right)
 
         if case .success(let list) = result {
-            #expect(nthOpt(n: 0, list: list)?.0 == 1)
-            #expect(nthOpt(n: 0, list: list)?.1 == "one")
-            #expect(nthOpt(n: 1, list: list)?.0 == 2)
-            #expect(nthOpt(n: 1, list: list)?.1 == "two")
-            #expect(nthOpt(n: 2, list: list)?.0 == 3)
-            #expect(nthOpt(n: 2, list: list)?.1 == "three")
-            #expect(nthOpt(n: 3, list: list) == nil)
+            #expect(nthOpt(0, list)?.0 == 1)
+            #expect(nthOpt(0, list)?.1 == "one")
+            #expect(nthOpt(1, list)?.0 == 2)
+            #expect(nthOpt(1, list)?.1 == "two")
+            #expect(nthOpt(2, list)?.0 == 3)
+            #expect(nthOpt(2, list)?.1 == "three")
+            #expect(nthOpt(3, list) == nil)
         } else {
             #expect(Bool(false))
         }
@@ -161,11 +161,11 @@ struct PairsTests {
         let result = combine(left, right)
 
         if case .success(let list) = result {
-            #expect(nthOpt(n: 0, list: list)?.0 == "one")
-            #expect(nthOpt(n: 0, list: list)?.1 == true)
-            #expect(nthOpt(n: 1, list: list)?.0 == "two")
-            #expect(nthOpt(n: 1, list: list)?.1 == false)
-            #expect(nthOpt(n: 2, list: list) == nil)
+            #expect(nthOpt(0, list)?.0 == "one")
+            #expect(nthOpt(0, list)?.1 == true)
+            #expect(nthOpt(1, list)?.0 == "two")
+            #expect(nthOpt(1, list)?.1 == false)
+            #expect(nthOpt(2, list) == nil)
         } else {
             #expect(Bool(false))
         }

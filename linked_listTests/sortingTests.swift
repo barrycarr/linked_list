@@ -20,9 +20,9 @@ struct SortingTests {
 
     private func expectList<T: Equatable>(_ list: LinkedList<T>, equals values: [T]) {
         for (index, value) in values.enumerated() {
-            #expect(nthOpt(n: index, list: list) == value)
+            #expect(nthOpt(index, list) == value)
         }
-        #expect(nthOpt(n: values.count, list: list) == nil)
+        #expect(nthOpt(values.count, list) == nil)
     }
 
     @Test func mergeReturnsEmptyListForTwoEmptyLists() {
@@ -31,7 +31,7 @@ struct SortingTests {
 
         let result = merge(intCmp, lhs, rhs)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
     }
 
     @Test func mergeReturnsRightListWhenLeftListIsEmpty() {
@@ -137,8 +137,8 @@ struct SortingTests {
 
         let (left, right) = halve(list)
 
-        #expect(isEmpty(list: left))
-        #expect(isEmpty(list: right))
+        #expect(isEmpty(left))
+        #expect(isEmpty(right))
     }
 
     @Test func halvePutsSingleValueInLeftList() {
@@ -147,7 +147,7 @@ struct SortingTests {
         let (left, right) = halve(list)
 
         expectList(left, equals: [1])
-        #expect(isEmpty(list: right))
+        #expect(isEmpty(right))
     }
 
     @Test func halveSplitsTwoValuesAcrossBothLists() {
@@ -190,7 +190,7 @@ struct SortingTests {
 
         let result = sort(intCmp, list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
     }
 
     @Test func sortReturnsSingleItemList() {

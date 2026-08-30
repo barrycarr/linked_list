@@ -95,8 +95,8 @@ struct IterationTests {
 
         let result = map({ $0 * 2 }, list)
 
-        #expect(isEmpty(list: result))
-        #expect(length(list: result) == 0)
+        #expect(isEmpty(result))
+        #expect(length(result) == 0)
     }
 
     @Test func mapTransformsEachElementInOrder() {
@@ -104,11 +104,11 @@ struct IterationTests {
 
         let result = map({ $0 * 2 }, list)
 
-        #expect(length(list: result) == 3)
-        #expect(nthOpt(n: 0, list: result) == 2)
-        #expect(nthOpt(n: 1, list: result) == 4)
-        #expect(nthOpt(n: 2, list: result) == 6)
-        #expect(nthOpt(n: 3, list: result) == nil)
+        #expect(length(result) == 3)
+        #expect(nthOpt(0, result) == 2)
+        #expect(nthOpt(1, result) == 4)
+        #expect(nthOpt(2, result) == 6)
+        #expect(nthOpt(3, result) == nil)
     }
 
     @Test func mapCanTransformElementType() {
@@ -116,10 +116,10 @@ struct IterationTests {
 
         let result = map({ "value-\($0)" }, list)
 
-        #expect(length(list: result) == 3)
-        #expect(nthOpt(n: 0, list: result) == "value-1")
-        #expect(nthOpt(n: 1, list: result) == "value-2")
-        #expect(nthOpt(n: 2, list: result) == "value-3")
+        #expect(length(result) == 3)
+        #expect(nthOpt(0, result) == "value-1")
+        #expect(nthOpt(1, result) == "value-2")
+        #expect(nthOpt(2, result) == "value-3")
     }
 
     @Test func mapDoesNotChangeOriginalList() {
@@ -127,9 +127,9 @@ struct IterationTests {
 
         _ = map({ $0 * 10 }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
     }
 
     @Test func mapOfCanBeUsedWithPipeForward() {
@@ -137,10 +137,10 @@ struct IterationTests {
 
         let result = list |> mapOf { $0 + 1 }
 
-        #expect(length(list: result) == 3)
-        #expect(nthOpt(n: 0, list: result) == 2)
-        #expect(nthOpt(n: 1, list: result) == 3)
-        #expect(nthOpt(n: 2, list: result) == 4)
+        #expect(length(result) == 3)
+        #expect(nthOpt(0, result) == 2)
+        #expect(nthOpt(1, result) == 3)
+        #expect(nthOpt(2, result) == 4)
     }
 
     @Test func mapIReturnsEmptyListForEmptyList() {
@@ -148,8 +148,8 @@ struct IterationTests {
 
         let result = mapI({ index, value in index + value }, list)
 
-        #expect(isEmpty(list: result))
-        #expect(length(list: result) == 0)
+        #expect(isEmpty(result))
+        #expect(length(result) == 0)
     }
 
     @Test func mapITransformsEachElementWithIndexInOrder() {
@@ -157,11 +157,11 @@ struct IterationTests {
 
         let result = mapI({ index, value in index + value }, list)
 
-        #expect(length(list: result) == 3)
-        #expect(nthOpt(n: 0, list: result) == 10)
-        #expect(nthOpt(n: 1, list: result) == 21)
-        #expect(nthOpt(n: 2, list: result) == 32)
-        #expect(nthOpt(n: 3, list: result) == nil)
+        #expect(length(result) == 3)
+        #expect(nthOpt(0, result) == 10)
+        #expect(nthOpt(1, result) == 21)
+        #expect(nthOpt(2, result) == 32)
+        #expect(nthOpt(3, result) == nil)
     }
 
     @Test func mapICanTransformElementType() {
@@ -169,10 +169,10 @@ struct IterationTests {
 
         let result = mapI({ index, value in "\(index):\(value)" }, list)
 
-        #expect(length(list: result) == 3)
-        #expect(nthOpt(n: 0, list: result) == "0:a")
-        #expect(nthOpt(n: 1, list: result) == "1:b")
-        #expect(nthOpt(n: 2, list: result) == "2:c")
+        #expect(length(result) == 3)
+        #expect(nthOpt(0, result) == "0:a")
+        #expect(nthOpt(1, result) == "1:b")
+        #expect(nthOpt(2, result) == "2:c")
     }
 
     @Test func mapIDoesNotChangeOriginalList() {
@@ -180,9 +180,9 @@ struct IterationTests {
 
         _ = mapI({ index, value in index + value }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 10)
-        #expect(nthOpt(n: 1, list: list) == 20)
-        #expect(nthOpt(n: 2, list: list) == 30)
+        #expect(nthOpt(0, list) == 10)
+        #expect(nthOpt(1, list) == 20)
+        #expect(nthOpt(2, list) == 30)
     }
 
     @Test func mapIOfCanBeUsedWithPipeForward() {
@@ -190,10 +190,10 @@ struct IterationTests {
 
         let result = list |> mapIOf { index, value in index * value }
 
-        #expect(length(list: result) == 3)
-        #expect(nthOpt(n: 0, list: result) == 0)
-        #expect(nthOpt(n: 1, list: result) == 20)
-        #expect(nthOpt(n: 2, list: result) == 60)
+        #expect(length(result) == 3)
+        #expect(nthOpt(0, result) == 0)
+        #expect(nthOpt(1, result) == 20)
+        #expect(nthOpt(2, result) == 60)
     }
 
     @Test func reverseMapReturnsEmptyListForEmptyList() {
@@ -201,8 +201,8 @@ struct IterationTests {
 
         let result = reverseMap({ $0 * 2 }, list)
 
-        #expect(isEmpty(list: result))
-        #expect(length(list: result) == 0)
+        #expect(isEmpty(result))
+        #expect(length(result) == 0)
     }
 
     @Test func reverseMapTransformsEachElementInReverseOrder() {
@@ -210,11 +210,11 @@ struct IterationTests {
 
         let result = reverseMap({ $0 * 2 }, list)
 
-        #expect(length(list: result) == 3)
-        #expect(nthOpt(n: 0, list: result) == 6)
-        #expect(nthOpt(n: 1, list: result) == 4)
-        #expect(nthOpt(n: 2, list: result) == 2)
-        #expect(nthOpt(n: 3, list: result) == nil)
+        #expect(length(result) == 3)
+        #expect(nthOpt(0, result) == 6)
+        #expect(nthOpt(1, result) == 4)
+        #expect(nthOpt(2, result) == 2)
+        #expect(nthOpt(3, result) == nil)
     }
 
     @Test func reverseMapCanTransformElementType() {
@@ -222,10 +222,10 @@ struct IterationTests {
 
         let result = reverseMap({ "value-\($0)" }, list)
 
-        #expect(length(list: result) == 3)
-        #expect(nthOpt(n: 0, list: result) == "value-3")
-        #expect(nthOpt(n: 1, list: result) == "value-2")
-        #expect(nthOpt(n: 2, list: result) == "value-1")
+        #expect(length(result) == 3)
+        #expect(nthOpt(0, result) == "value-3")
+        #expect(nthOpt(1, result) == "value-2")
+        #expect(nthOpt(2, result) == "value-1")
     }
 
     @Test func reverseMapDoesNotChangeOriginalList() {
@@ -233,9 +233,9 @@ struct IterationTests {
 
         _ = reverseMap({ $0 * 10 }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
     }
 
     @Test func reverseMapOfCanBeUsedWithPipeForward() {
@@ -243,10 +243,10 @@ struct IterationTests {
 
         let result = list |> reverseMapOf { $0 + 1 }
 
-        #expect(length(list: result) == 3)
-        #expect(nthOpt(n: 0, list: result) == 4)
-        #expect(nthOpt(n: 1, list: result) == 3)
-        #expect(nthOpt(n: 2, list: result) == 2)
+        #expect(length(result) == 3)
+        #expect(nthOpt(0, result) == 4)
+        #expect(nthOpt(1, result) == 3)
+        #expect(nthOpt(2, result) == 2)
     }
 
     @Test func filterMapReturnsEmptyListForEmptyList() {
@@ -254,8 +254,8 @@ struct IterationTests {
 
         let result = filterMap({ value in value * 2 }, list)
 
-        #expect(isEmpty(list: result))
-        #expect(length(list: result) == 0)
+        #expect(isEmpty(result))
+        #expect(length(result) == 0)
     }
 
     @Test func filterMapReturnsEmptyListWhenAllValuesReturnNil() {
@@ -265,8 +265,8 @@ struct IterationTests {
             value.isMultiple(of: 2) ? value : nil
         }, list)
 
-        #expect(isEmpty(list: result))
-        #expect(length(list: result) == 0)
+        #expect(isEmpty(result))
+        #expect(length(result) == 0)
     }
 
     @Test func filterMapKeepsMappedValuesAndDropsNilValuesInOrder() {
@@ -276,10 +276,10 @@ struct IterationTests {
             value.isMultiple(of: 2) ? value * 10 : nil
         }, list)
 
-        #expect(length(list: result) == 2)
-        #expect(nthOpt(n: 0, list: result) == 20)
-        #expect(nthOpt(n: 1, list: result) == 40)
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(length(result) == 2)
+        #expect(nthOpt(0, result) == 20)
+        #expect(nthOpt(1, result) == 40)
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func filterMapCanTransformElementType() {
@@ -287,10 +287,10 @@ struct IterationTests {
 
         let result = filterMap({ Int($0) }, list)
 
-        #expect(length(list: result) == 2)
-        #expect(nthOpt(n: 0, list: result) == 1)
-        #expect(nthOpt(n: 1, list: result) == 3)
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(length(result) == 2)
+        #expect(nthOpt(0, result) == 1)
+        #expect(nthOpt(1, result) == 3)
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func filterMapDoesNotChangeOriginalList() {
@@ -300,9 +300,9 @@ struct IterationTests {
             value.isMultiple(of: 2) ? value : nil
         }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
     }
 
     @Test func filterMapOfCanBeUsedWithPipeForward() {
@@ -312,10 +312,10 @@ struct IterationTests {
             value > 2 ? "value-\(value)" : nil
         }
 
-        #expect(length(list: result) == 2)
-        #expect(nthOpt(n: 0, list: result) == "value-3")
-        #expect(nthOpt(n: 1, list: result) == "value-4")
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(length(result) == 2)
+        #expect(nthOpt(0, result) == "value-3")
+        #expect(nthOpt(1, result) == "value-4")
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func filterMapIReturnsEmptyListForEmptyList() {
@@ -323,8 +323,8 @@ struct IterationTests {
 
         let result = filterMapI({ index, value in index + value }, list)
 
-        #expect(isEmpty(list: result))
-        #expect(length(list: result) == 0)
+        #expect(isEmpty(result))
+        #expect(length(result) == 0)
     }
 
     @Test func filterMapIReturnsEmptyListWhenAllValuesReturnNil() {
@@ -332,8 +332,8 @@ struct IterationTests {
 
         let result = filterMapI({ _, _ in nil as Int? }, list)
 
-        #expect(isEmpty(list: result))
-        #expect(length(list: result) == 0)
+        #expect(isEmpty(result))
+        #expect(length(result) == 0)
     }
 
     @Test func filterMapIKeepsMappedValuesAndDropsNilValuesInOrder() {
@@ -343,10 +343,10 @@ struct IterationTests {
             index.isMultiple(of: 2) ? index + value : nil
         }, list)
 
-        #expect(length(list: result) == 2)
-        #expect(nthOpt(n: 0, list: result) == 10)
-        #expect(nthOpt(n: 1, list: result) == 32)
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(length(result) == 2)
+        #expect(nthOpt(0, result) == 10)
+        #expect(nthOpt(1, result) == 32)
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func filterMapIIncrementsIndexWhenValuesAreDropped() {
@@ -356,10 +356,10 @@ struct IterationTests {
             value.isMultiple(of: 2) ? index : nil
         }, list)
 
-        #expect(length(list: result) == 2)
-        #expect(nthOpt(n: 0, list: result) == 1)
-        #expect(nthOpt(n: 1, list: result) == 3)
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(length(result) == 2)
+        #expect(nthOpt(0, result) == 1)
+        #expect(nthOpt(1, result) == 3)
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func filterMapICanTransformElementType() {
@@ -369,10 +369,10 @@ struct IterationTests {
             value.isEmpty ? nil : "\(index):\(value)"
         }, list)
 
-        #expect(length(list: result) == 2)
-        #expect(nthOpt(n: 0, list: result) == "0:a")
-        #expect(nthOpt(n: 1, list: result) == "2:c")
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(length(result) == 2)
+        #expect(nthOpt(0, result) == "0:a")
+        #expect(nthOpt(1, result) == "2:c")
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func filterMapIDoesNotChangeOriginalList() {
@@ -382,9 +382,9 @@ struct IterationTests {
             index.isMultiple(of: 2) ? value : nil
         }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
     }
 
     @Test func filterMapIOfCanBeUsedWithPipeForward() {
@@ -394,10 +394,10 @@ struct IterationTests {
             value > 2 ? "value-\(index)-\(value)" : nil
         }
 
-        #expect(length(list: result) == 2)
-        #expect(nthOpt(n: 0, list: result) == "value-2-3")
-        #expect(nthOpt(n: 1, list: result) == "value-3-4")
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(length(result) == 2)
+        #expect(nthOpt(0, result) == "value-2-3")
+        #expect(nthOpt(1, result) == "value-3-4")
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func concatMapReturnsEmptyListForEmptyList() {
@@ -405,8 +405,8 @@ struct IterationTests {
 
         let result = concatMap({ value in value +| LinkedList<Int>.empty }, list)
 
-        #expect(isEmpty(list: result))
-        #expect(length(list: result) == 0)
+        #expect(isEmpty(result))
+        #expect(length(result) == 0)
     }
 
     @Test func concatMapReturnsEmptyListWhenAllMappedListsAreEmpty() {
@@ -414,8 +414,8 @@ struct IterationTests {
 
         let result = concatMap({ _ in LinkedList<Int>.empty }, list)
 
-        #expect(isEmpty(list: result))
-        #expect(length(list: result) == 0)
+        #expect(isEmpty(result))
+        #expect(length(result) == 0)
     }
 
     @Test func concatMapConcatenatesMappedListsInOrder() {
@@ -425,14 +425,14 @@ struct IterationTests {
             value +| (value * 10) +| LinkedList<Int>.empty
         }, list)
 
-        #expect(length(list: result) == 6)
-        #expect(nthOpt(n: 0, list: result) == 1)
-        #expect(nthOpt(n: 1, list: result) == 10)
-        #expect(nthOpt(n: 2, list: result) == 2)
-        #expect(nthOpt(n: 3, list: result) == 20)
-        #expect(nthOpt(n: 4, list: result) == 3)
-        #expect(nthOpt(n: 5, list: result) == 30)
-        #expect(nthOpt(n: 6, list: result) == nil)
+        #expect(length(result) == 6)
+        #expect(nthOpt(0, result) == 1)
+        #expect(nthOpt(1, result) == 10)
+        #expect(nthOpt(2, result) == 2)
+        #expect(nthOpt(3, result) == 20)
+        #expect(nthOpt(4, result) == 3)
+        #expect(nthOpt(5, result) == 30)
+        #expect(nthOpt(6, result) == nil)
     }
 
     @Test func concatMapSkipsEmptyMappedLists() {
@@ -442,10 +442,10 @@ struct IterationTests {
             value.isMultiple(of: 2) ? value +| LinkedList<Int>.empty : .empty
         }, list)
 
-        #expect(length(list: result) == 2)
-        #expect(nthOpt(n: 0, list: result) == 2)
-        #expect(nthOpt(n: 1, list: result) == 4)
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(length(result) == 2)
+        #expect(nthOpt(0, result) == 2)
+        #expect(nthOpt(1, result) == 4)
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func concatMapCanTransformElementType() {
@@ -455,12 +455,12 @@ struct IterationTests {
             "value-\(value)" +| "double-\(value * 2)" +| LinkedList<String>.empty
         }, list)
 
-        #expect(length(list: result) == 4)
-        #expect(nthOpt(n: 0, list: result) == "value-1")
-        #expect(nthOpt(n: 1, list: result) == "double-2")
-        #expect(nthOpt(n: 2, list: result) == "value-2")
-        #expect(nthOpt(n: 3, list: result) == "double-4")
-        #expect(nthOpt(n: 4, list: result) == nil)
+        #expect(length(result) == 4)
+        #expect(nthOpt(0, result) == "value-1")
+        #expect(nthOpt(1, result) == "double-2")
+        #expect(nthOpt(2, result) == "value-2")
+        #expect(nthOpt(3, result) == "double-4")
+        #expect(nthOpt(4, result) == nil)
     }
 
     @Test func concatMapDoesNotChangeOriginalList() {
@@ -468,9 +468,9 @@ struct IterationTests {
 
         _ = concatMap({ value in value +| LinkedList<Int>.empty }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
     }
 
     @Test func concatMapOfCanBeUsedWithPipeForward() {
@@ -480,12 +480,12 @@ struct IterationTests {
             value +| (value + 100) +| LinkedList<Int>.empty
         }
 
-        #expect(length(list: result) == 4)
-        #expect(nthOpt(n: 0, list: result) == 1)
-        #expect(nthOpt(n: 1, list: result) == 101)
-        #expect(nthOpt(n: 2, list: result) == 2)
-        #expect(nthOpt(n: 3, list: result) == 102)
-        #expect(nthOpt(n: 4, list: result) == nil)
+        #expect(length(result) == 4)
+        #expect(nthOpt(0, result) == 1)
+        #expect(nthOpt(1, result) == 101)
+        #expect(nthOpt(2, result) == 2)
+        #expect(nthOpt(3, result) == 102)
+        #expect(nthOpt(4, result) == nil)
     }
 
     @Test func foldLeftReturnsAccumulatorForEmptyList() {
@@ -536,9 +536,9 @@ struct IterationTests {
 
         _ = foldLeft({ acc, value in acc + value }, 0, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
     }
 
     @Test func foldLeftOfCanBeUsedWithPipeForward() {
@@ -561,8 +561,8 @@ struct IterationTests {
         }, 42, list)
 
         #expect(acc == 42)
-        #expect(isEmpty(list: mapped))
-        #expect(length(list: mapped) == 0)
+        #expect(isEmpty(mapped))
+        #expect(length(mapped) == 0)
         #expect(callCount == 0)
     }
 
@@ -575,11 +575,11 @@ struct IterationTests {
         }, 0, list)
 
         #expect(acc == -6)
-        #expect(length(list: mapped) == 3)
-        #expect(nthOpt(n: 0, list: mapped) == -1)
-        #expect(nthOpt(n: 1, list: mapped) == -3)
-        #expect(nthOpt(n: 2, list: mapped) == -6)
-        #expect(nthOpt(n: 3, list: mapped) == nil)
+        #expect(length(mapped) == 3)
+        #expect(nthOpt(0, mapped) == -1)
+        #expect(nthOpt(1, mapped) == -3)
+        #expect(nthOpt(2, mapped) == -6)
+        #expect(nthOpt(3, mapped) == nil)
     }
 
     @Test func foldLeftMapKeepsMappedValuesInOriginalOrder() {
@@ -590,11 +590,11 @@ struct IterationTests {
         }, 0, list)
 
         #expect(acc == 6)
-        #expect(length(list: mapped) == 3)
-        #expect(nthOpt(n: 0, list: mapped) == 10)
-        #expect(nthOpt(n: 1, list: mapped) == 20)
-        #expect(nthOpt(n: 2, list: mapped) == 30)
-        #expect(nthOpt(n: 3, list: mapped) == nil)
+        #expect(length(mapped) == 3)
+        #expect(nthOpt(0, mapped) == 10)
+        #expect(nthOpt(1, mapped) == 20)
+        #expect(nthOpt(2, mapped) == 30)
+        #expect(nthOpt(3, mapped) == nil)
     }
 
     @Test func foldLeftMapCanReturnDifferentMappedType() {
@@ -605,11 +605,11 @@ struct IterationTests {
         }, 0, list)
 
         #expect(acc == 6)
-        #expect(length(list: mapped) == 3)
-        #expect(nthOpt(n: 0, list: mapped) == "0:a")
-        #expect(nthOpt(n: 1, list: mapped) == "1:bb")
-        #expect(nthOpt(n: 2, list: mapped) == "3:ccc")
-        #expect(nthOpt(n: 3, list: mapped) == nil)
+        #expect(length(mapped) == 3)
+        #expect(nthOpt(0, mapped) == "0:a")
+        #expect(nthOpt(1, mapped) == "1:bb")
+        #expect(nthOpt(2, mapped) == "3:ccc")
+        #expect(nthOpt(3, mapped) == nil)
     }
 
     @Test func foldLeftMapDoesNotChangeOriginalList() {
@@ -619,9 +619,9 @@ struct IterationTests {
             (acc + value, value * 2)
         }, 0, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
     }
 
     @Test func foldLeftMapOfCanBeUsedWithPipeForward() {
@@ -632,11 +632,11 @@ struct IterationTests {
         }, 10)
 
         #expect(acc == 16)
-        #expect(length(list: mapped) == 3)
-        #expect(nthOpt(n: 0, list: mapped) == "value-1")
-        #expect(nthOpt(n: 1, list: mapped) == "value-2")
-        #expect(nthOpt(n: 2, list: mapped) == "value-3")
-        #expect(nthOpt(n: 3, list: mapped) == nil)
+        #expect(length(mapped) == 3)
+        #expect(nthOpt(0,mapped) == "value-1")
+        #expect(nthOpt(1, mapped) == "value-2")
+        #expect(nthOpt(2, mapped) == "value-3")
+        #expect(nthOpt(3, mapped) == nil)
     }
 
     @Test func foldRightReturnsAccumulatorForEmptyList() {
@@ -687,9 +687,9 @@ struct IterationTests {
 
         _ = foldRight({ value, acc in value + acc }, list, 0)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
     }
 
     @Test func foldRightOfCanBeUsedWithPipeForward() {

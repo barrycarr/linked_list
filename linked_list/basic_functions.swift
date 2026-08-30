@@ -9,66 +9,66 @@ public func empty<T>() -> LinkedList<T> {
     return .empty
 }
 
-public func head<T>(list: LinkedList<T>) -> T? {
+public func head<T>(_ list: LinkedList<T>) -> T? {
     switch list {
     case .empty: return nil
     case .cons(let value, _): return value
     }
 }
 
-public func tail<T>(list: LinkedList<T>) -> LinkedList<T> {
+public func tail<T>(_ list: LinkedList<T>) -> LinkedList<T> {
     switch list {
     case .empty: return .empty
     case .cons(_, let rest): return rest
     }
 }
 
-public func length<T>(list: LinkedList<T>) -> Int {
+public func length<T>(_ list: LinkedList<T>) -> Int {
     switch list {
     case .empty: return 0
-    case .cons(_, let rest): return 1 + length(list: rest)
+    case .cons(_, let rest): return 1 + length(rest)
     }
 }
 
-public func isEmpty<T>(list: LinkedList<T>) -> Bool {
+public func isEmpty<T>(_ list: LinkedList<T>) -> Bool {
     switch list {
     case .cons: return false
     case .empty: return true
     }
 }
 
-public func nth<T>(n: Int, list: LinkedList<T>) -> Result<T, LinkedListError> {
+public func nth<T>(_ n: Int, _ list: LinkedList<T>) -> Result<T, LinkedListError> {
     guard n >= 0 else {
         return .failure(.negativeIndex)
     }
-    guard !isEmpty(list: list) else {
+    guard !isEmpty(list) else {
         return .failure(.listEmpty)
     }
 
-    func getNth(index: Int, list: LinkedList<T>) -> Result<T, LinkedListError> {
+    func getNth(_ index: Int, _ list: LinkedList<T>) -> Result<T, LinkedListError> {
         switch (index, list) {
         case (0, .cons(let value, _)): return .success(value)
         case (_, .empty): return .failure(.listTooShort)
-        case (let index, .cons(_, let rest)): return getNth(index: index - 1, list: rest)
+        case (let index, .cons(_, let rest)): return getNth(index - 1, rest)
         }
     }
 
-    return getNth(index: n, list: list)
+    return getNth(n, list)
 }
 
 public func nthOf<T>(_ list: LinkedList<T>) -> (Int) -> Result<T, LinkedListError> {
-    { index in nth(n: index, list: list) }
+    { index in nth(index, list) }
 }
 
-public func nthOpt<T>(n: Int, list: LinkedList<T>) -> T? {
-    switch nth(n: n, list: list) {
+public func nthOpt<T>(_ n: Int, _ list: LinkedList<T>) -> T? {
+    switch nth(n, list) {
     case .success(let value): return value
     case .failure: return nil
     }
 }
 
 public func nthOfOpt<T>(_ list: LinkedList<T>) -> (Int) -> T? {
-    { index in nthOpt(n: index, list: list) }
+    { index in nthOpt(index, list) }
 }
 
 public func singleton<T>(_ value: T) -> LinkedList<T> {

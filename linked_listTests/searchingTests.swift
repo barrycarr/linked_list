@@ -90,9 +90,9 @@ struct SearchingTests {
 
         _ = find({ value in value == 2 }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
     }
 
     @Test func findOfCanBeUsedWithPipeForward() {
@@ -246,9 +246,9 @@ struct SearchingTests {
 
         _ = findIndex({ value in value.isMultiple(of: 2) }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 3)
-        #expect(nthOpt(n: 2, list: list) == 4)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 3)
+        #expect(nthOpt(2, list) == 4)
     }
 
     @Test func findIndexOfCanBeUsedWithPipeForward() {
@@ -322,9 +322,9 @@ struct SearchingTests {
 
         _ = findMap({ value in value.isMultiple(of: 2) ? value * 10 : nil }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 3)
-        #expect(nthOpt(n: 2, list: list) == 4)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 3)
+        #expect(nthOpt(2, list) == 4)
     }
 
     @Test func findMapOfCanBeUsedWithPipeForward() {
@@ -417,9 +417,9 @@ struct SearchingTests {
 
         _ = findMapI({ index, value in value.isMultiple(of: 2) ? index + value : nil }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 3)
-        #expect(nthOpt(n: 2, list: list) == 4)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 3)
+        #expect(nthOpt(2, list) == 4)
     }
 
     @Test func findMapIOfCanBeUsedWithPipeForward() {
@@ -441,7 +441,7 @@ struct SearchingTests {
             return true
         }, list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
         #expect(callCount == 0)
     }
 
@@ -452,7 +452,7 @@ struct SearchingTests {
             value.isMultiple(of: 2)
         }, list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
     }
 
     @Test func filterReturnsAllElementsWhenAllElementsMatchPredicate() {
@@ -462,10 +462,10 @@ struct SearchingTests {
             value.isMultiple(of: 2)
         }, list)
 
-        #expect(nthOpt(n: 0, list: result) == 2)
-        #expect(nthOpt(n: 1, list: result) == 4)
-        #expect(nthOpt(n: 2, list: result) == 6)
-        #expect(nthOpt(n: 3, list: result) == nil)
+        #expect(nthOpt(0, result) == 2)
+        #expect(nthOpt(1, result) == 4)
+        #expect(nthOpt(2, result) == 6)
+        #expect(nthOpt(3, result) == nil)
     }
 
     @Test func filterKeepsMatchingElementsInOriginalOrder() {
@@ -475,10 +475,10 @@ struct SearchingTests {
             value.isMultiple(of: 2)
         }, list)
 
-        #expect(nthOpt(n: 0, list: result) == 2)
-        #expect(nthOpt(n: 1, list: result) == 4)
-        #expect(nthOpt(n: 2, list: result) == 6)
-        #expect(nthOpt(n: 3, list: result) == nil)
+        #expect(nthOpt(0, result) == 2)
+        #expect(nthOpt(1, result) == 4)
+        #expect(nthOpt(2, result) == 6)
+        #expect(nthOpt(3, result) == nil)
     }
 
     @Test func filterCallsPredicateForEveryElement() {
@@ -500,9 +500,9 @@ struct SearchingTests {
             value.hasPrefix("a")
         }, list)
 
-        #expect(nthOpt(n: 0, list: result) == "apple")
-        #expect(nthOpt(n: 1, list: result) == "apricot")
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(nthOpt(0, result) == "apple")
+        #expect(nthOpt(1, result) == "apricot")
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func filterDoesNotChangeOriginalList() {
@@ -510,10 +510,10 @@ struct SearchingTests {
 
         _ = filter({ value in value.isMultiple(of: 2) }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
-        #expect(nthOpt(n: 3, list: list) == 4)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
+        #expect(nthOpt(3, list) == 4)
     }
 
     @Test func filterOfCanBeUsedWithPipeForward() {
@@ -523,9 +523,9 @@ struct SearchingTests {
             value.hasPrefix("b")
         }
 
-        #expect(nthOpt(n: 0, list: result) == "banana")
-        #expect(nthOpt(n: 1, list: result) == "blueberry")
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(nthOpt(0, result) == "banana")
+        #expect(nthOpt(1, result) == "blueberry")
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func findAllReturnsEmptyListForEmptyList() {
@@ -537,7 +537,7 @@ struct SearchingTests {
             return true
         }, list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
         #expect(callCount == 0)
     }
 
@@ -548,10 +548,10 @@ struct SearchingTests {
             value.isMultiple(of: 2)
         }, list)
 
-        #expect(nthOpt(n: 0, list: result) == 2)
-        #expect(nthOpt(n: 1, list: result) == 4)
-        #expect(nthOpt(n: 2, list: result) == 6)
-        #expect(nthOpt(n: 3, list: result) == nil)
+        #expect(nthOpt(0, result) == 2)
+        #expect(nthOpt(1, result) == 4)
+        #expect(nthOpt(2, result) == 6)
+        #expect(nthOpt(3, result) == nil)
     }
 
     @Test func findAllReturnsEmptyListWhenNoElementsMatchPredicate() {
@@ -561,7 +561,7 @@ struct SearchingTests {
             value.isMultiple(of: 2)
         }, list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
     }
 
     @Test func findAllOfCanBeUsedWithPipeForward() {
@@ -571,9 +571,9 @@ struct SearchingTests {
             value.hasPrefix("a")
         }
 
-        #expect(nthOpt(n: 0, list: result) == "apple")
-        #expect(nthOpt(n: 1, list: result) == "apricot")
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(nthOpt(0, result) == "apple")
+        #expect(nthOpt(1, result) == "apricot")
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func filterIReturnsEmptyListForEmptyList() {
@@ -585,7 +585,7 @@ struct SearchingTests {
             return true
         }, list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
         #expect(callCount == 0)
     }
 
@@ -596,7 +596,7 @@ struct SearchingTests {
             index + value > 10
         }, list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
     }
 
     @Test func filterIReturnsAllElementsWhenAllElementsMatchPredicate() {
@@ -606,10 +606,10 @@ struct SearchingTests {
             index >= 0 && !value.isEmpty
         }, list)
 
-        #expect(nthOpt(n: 0, list: result) == "a")
-        #expect(nthOpt(n: 1, list: result) == "b")
-        #expect(nthOpt(n: 2, list: result) == "c")
-        #expect(nthOpt(n: 3, list: result) == nil)
+        #expect(nthOpt(0, result) == "a")
+        #expect(nthOpt(1, result) == "b")
+        #expect(nthOpt(2, result) == "c")
+        #expect(nthOpt(3, result) == nil)
     }
 
     @Test func filterIKeepsMatchingElementsInOriginalOrder() {
@@ -619,10 +619,10 @@ struct SearchingTests {
             index.isMultiple(of: 2) || value == 40
         }, list)
 
-        #expect(nthOpt(n: 0, list: result) == 10)
-        #expect(nthOpt(n: 1, list: result) == 30)
-        #expect(nthOpt(n: 2, list: result) == 40)
-        #expect(nthOpt(n: 3, list: result) == nil)
+        #expect(nthOpt(0, result) == 10)
+        #expect(nthOpt(1, result) == 30)
+        #expect(nthOpt(2, result) == 40)
+        #expect(nthOpt(3, result) == nil)
     }
 
     @Test func filterIPassesZeroBasedIndexToPredicate() {
@@ -660,9 +660,9 @@ struct SearchingTests {
 
         _ = filterI({ index, _ in index > 0 }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 10)
-        #expect(nthOpt(n: 1, list: list) == 20)
-        #expect(nthOpt(n: 2, list: list) == 30)
+        #expect(nthOpt(0, list) == 10)
+        #expect(nthOpt(1, list) == 20)
+        #expect(nthOpt(2, list) == 30)
     }
 
     @Test func filterIOfCanBeUsedWithPipeForward() {
@@ -672,7 +672,7 @@ struct SearchingTests {
             index > 0 && value.hasPrefix("a")
         }
 
-        #expect(nthOpt(n: 0, list: result) == "apricot")
-        #expect(nthOpt(n: 1, list: result) == nil)
+        #expect(nthOpt(0, result) == "apricot")
+        #expect(nthOpt(1, result) == nil)
     }
 }

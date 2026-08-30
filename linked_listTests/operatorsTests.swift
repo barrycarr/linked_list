@@ -13,11 +13,11 @@ struct OperatorsTests {
     @Test func consOperatorCreatesListWithRightAssociativity() {
         let list = 1 +| 2 +| 3 +| LinkedList<Int>.empty
 
-        #expect(length(list: list) == 3)
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
-        #expect(nthOpt(n: 3, list: list) == nil)
+        #expect(length(list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
+        #expect(nthOpt(3, list) == nil)
     }
 
     @Test func appendOperatorCombinesListsInOrder() {
@@ -26,12 +26,12 @@ struct OperatorsTests {
 
         let result = first <> second
 
-        #expect(length(list: result) == 4)
-        #expect(nthOpt(n: 0, list: result) == 1)
-        #expect(nthOpt(n: 1, list: result) == 2)
-        #expect(nthOpt(n: 2, list: result) == 3)
-        #expect(nthOpt(n: 3, list: result) == 4)
-        #expect(nthOpt(n: 4, list: result) == nil)
+        #expect(length(result) == 4)
+        #expect(nthOpt(0, result) == 1)
+        #expect(nthOpt(1, result) == 2)
+        #expect(nthOpt(2, result) == 3)
+        #expect(nthOpt(3, result) == 4)
+        #expect(nthOpt(4, result) == nil)
     }
 
     @Test func pipeForwardPassesValueToUnaryFunction() {
@@ -47,7 +47,7 @@ struct OperatorsTests {
 
         let result = list
             |> reverse
-            |> { length(list: $0) }
+            |> { length($0) }
 
         #expect(result == 3)
     }
@@ -79,11 +79,11 @@ struct OperatorsTests {
 
         let result = appendTo(second)(first)
 
-        #expect(length(list: result) == 4)
-        #expect(nthOpt(n: 0, list: result) == 1)
-        #expect(nthOpt(n: 1, list: result) == 2)
-        #expect(nthOpt(n: 2, list: result) == 3)
-        #expect(nthOpt(n: 3, list: result) == 4)
+        #expect(length(result) == 4)
+        #expect(nthOpt(0, result) == 1)
+        #expect(nthOpt(1, result) == 2)
+        #expect(nthOpt(2, result) == 3)
+        #expect(nthOpt(3, result) == 4)
     }
 
     @Test func appendToCanBeUsedWithPipeForward() {
@@ -94,11 +94,11 @@ struct OperatorsTests {
             |> appendTo(second)
             |> reverse
 
-        #expect(length(list: result) == 4)
-        #expect(nthOpt(n: 0, list: result) == 4)
-        #expect(nthOpt(n: 1, list: result) == 3)
-        #expect(nthOpt(n: 2, list: result) == 2)
-        #expect(nthOpt(n: 3, list: result) == 1)
+        #expect(length(result) == 4)
+        #expect(nthOpt(0, result) == 4)
+        #expect(nthOpt(1, result) == 3)
+        #expect(nthOpt(2, result) == 2)
+        #expect(nthOpt(3, result) == 1)
     }
 
     @Test func revAppendToReturnsFunctionThatReverseAppendsSecondList() {
@@ -107,12 +107,12 @@ struct OperatorsTests {
 
         let result = revAppendTo(second)(first)
 
-        #expect(length(list: result) == 5)
-        #expect(nthOpt(n: 0, list: result) == 3)
-        #expect(nthOpt(n: 1, list: result) == 2)
-        #expect(nthOpt(n: 2, list: result) == 1)
-        #expect(nthOpt(n: 3, list: result) == 4)
-        #expect(nthOpt(n: 4, list: result) == 5)
+        #expect(length(result) == 5)
+        #expect(nthOpt(0, result) == 3)
+        #expect(nthOpt(1, result) == 2)
+        #expect(nthOpt(2, result) == 1)
+        #expect(nthOpt(3, result) == 4)
+        #expect(nthOpt(4, result) == 5)
     }
 
     @Test func revAppendToCanBeUsedWithPipeForward() {
@@ -121,7 +121,7 @@ struct OperatorsTests {
 
         let result = first
             |> revAppendTo(second)
-            |> { length(list: $0) }
+            |> { length($0) }
 
         #expect(result == 5)
     }

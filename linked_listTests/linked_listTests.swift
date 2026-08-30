@@ -13,27 +13,27 @@ struct BasicFunctionsTests {
     @Test func emptyListHasNoHeadTailLengthAndIsEmpty() {
         let list = LinkedList<Int>.empty
 
-        let listTail = tail(list: list)
+        let listTail = tail(list)
 
-        #expect(head(list: list) == nil)
-        #expect(head(list: listTail) == nil)
-        #expect(length(list: list) == 0)
-        #expect(isEmpty(list: list))
+        #expect(head(list) == nil)
+        #expect(head(listTail) == nil)
+        #expect(length(list) == 0)
+        #expect(isEmpty(list))
     }
 
     @Test func consListHasHeadLengthAndIsNotEmpty() {
         let list = LinkedList.cons(10, LinkedList<Int>.empty)
 
-        #expect(head(list: list) == 10)
-        #expect(length(list: list) == 1)
-        #expect(!isEmpty(list: list))
+        #expect(head(list) == 10)
+        #expect(length(list) == 1)
+        #expect(!isEmpty(list))
     }
 
     @Test func consAddsValuesToTheHead() {
         let list = LinkedList.cons("second", LinkedList.cons("first", LinkedList<String>.empty))
 
-        #expect(head(list: list) == "second")
-        #expect(length(list: list) == 2)
+        #expect(head(list) == "second")
+        #expect(length(list) == 2)
     }
 
     @Test func listCanBePatternMatchedIntoHeadAndTail() {
@@ -44,30 +44,30 @@ struct BasicFunctionsTests {
             Issue.record("Expected cons list")
         case .cons(let value, let rest):
             #expect(value == 2)
-            #expect(head(list: rest) == 1)
+            #expect(head(rest) == 1)
         }
     }
 
     @Test func tailReturnsRemainingListAfterHead() {
         let list = LinkedList.cons(3, LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty)))
 
-        let secondNode = tail(list: list)
-        let thirdNode = tail(list: secondNode)
-        let emptyList = tail(list: thirdNode)
+        let secondNode = tail(list)
+        let thirdNode = tail(secondNode)
+        let emptyList = tail(thirdNode)
 
-        #expect(head(list: secondNode) == 2)
-        #expect(head(list: thirdNode) == 1)
-        #expect(head(list: emptyList) == nil)
-        #expect(length(list: secondNode) == 2)
-        #expect(length(list: thirdNode) == 1)
-        #expect(length(list: emptyList) == 0)
-        #expect(isEmpty(list: emptyList))
+        #expect(head(secondNode) == 2)
+        #expect(head(thirdNode) == 1)
+        #expect(head(emptyList) == nil)
+        #expect(length(secondNode) == 2)
+        #expect(length(thirdNode) == 1)
+        #expect(length(emptyList) == 0)
+        #expect(isEmpty(emptyList))
     }
 
     @Test func nthReturnsHeadForZeroIndex() {
         let list = LinkedList.cons("second", LinkedList.cons("first", LinkedList<String>.empty))
 
-        switch nth(n: 0, list: list) {
+        switch nth(0, list) {
         case .success(let value):
             #expect(value == "second")
         case .failure(let error):
@@ -78,7 +78,7 @@ struct BasicFunctionsTests {
     @Test func nthReturnsValueAtPositiveIndex() {
         let list = LinkedList.cons(3, LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty)))
 
-        switch nth(n: 2, list: list) {
+        switch nth(2, list) {
         case .success(let value):
             #expect(value == 1)
         case .failure(let error):
@@ -89,7 +89,7 @@ struct BasicFunctionsTests {
     @Test func nthFailsForNegativeIndex() {
         let list = LinkedList.cons(10, LinkedList<Int>.empty)
 
-        switch nth(n: -1, list: list) {
+        switch nth(-1, list) {
         case .success:
             Issue.record("Expected negativeIndex failure")
         case .failure(.negativeIndex):
@@ -102,7 +102,7 @@ struct BasicFunctionsTests {
     @Test func nthFailsForEmptyList() {
         let list = LinkedList<Int>.empty
 
-        switch nth(n: 0, list: list) {
+        switch nth(0, list) {
         case .success:
             Issue.record("Expected listEmpty failure")
         case .failure(.listEmpty):
@@ -115,7 +115,7 @@ struct BasicFunctionsTests {
     @Test func nthFailsForIndexEqualToLength() {
         let list = LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty))
 
-        switch nth(n: 2, list: list) {
+        switch nth(2, list) {
         case .success:
             Issue.record("Expected listTooShort failure")
         case .failure(.listTooShort):
@@ -128,7 +128,7 @@ struct BasicFunctionsTests {
     @Test func nthFailsForIndexGreaterThanLength() {
         let list = LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty))
 
-        switch nth(n: 3, list: list) {
+        switch nth(3, list) {
         case .success:
             Issue.record("Expected listTooShort failure")
         case .failure(.listTooShort):
@@ -141,46 +141,46 @@ struct BasicFunctionsTests {
     @Test func nthOptReturnsHeadForZeroIndex() {
         let list = LinkedList.cons("second", LinkedList.cons("first", LinkedList<String>.empty))
 
-        #expect(nthOpt(n: 0, list: list) == "second")
+        #expect(nthOpt(0, list) == "second")
     }
 
     @Test func nthOptReturnsValueAtPositiveIndex() {
         let list = LinkedList.cons(3, LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty)))
 
-        #expect(nthOpt(n: 2, list: list) == 1)
+        #expect(nthOpt(2, list) == 1)
     }
 
     @Test func nthOptReturnsNilForNegativeIndex() {
         let list = LinkedList.cons(10, LinkedList<Int>.empty)
 
-        #expect(nthOpt(n: -1, list: list) == nil)
+        #expect(nthOpt(-1, list) == nil)
     }
 
     @Test func nthOptReturnsNilForEmptyList() {
         let list = LinkedList<Int>.empty
 
-        #expect(nthOpt(n: 0, list: list) == nil)
+        #expect(nthOpt(0, list) == nil)
     }
 
     @Test func nthOptReturnsNilForIndexEqualToLength() {
         let list = LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty))
 
-        #expect(nthOpt(n: 2, list: list) == nil)
+        #expect(nthOpt(2, list) == nil)
     }
 
     @Test func nthOptReturnsNilForIndexGreaterThanLength() {
         let list = LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty))
 
-        #expect(nthOpt(n: 3, list: list) == nil)
+        #expect(nthOpt(3, list) == nil)
     }
 
     @Test func singletonCreatesOneItemList() {
         let list = singleton(42)
 
-        #expect(head(list: list) == 42)
-        #expect(length(list: list) == 1)
-        #expect(head(list: tail(list: list)) == nil)
-        #expect(isEmpty(list: tail(list: list)))
+        #expect(head(list) == 42)
+        #expect(length(list) == 1)
+        #expect(head(tail(list)) == nil)
+        #expect(isEmpty(tail(list)))
     }
 
     @Test func reverseReturnsEmptyListForEmptyList() {
@@ -188,8 +188,8 @@ struct BasicFunctionsTests {
 
         let reversed = reverse(list)
 
-        #expect(isEmpty(list: reversed))
-        #expect(length(list: reversed) == 0)
+        #expect(isEmpty(reversed))
+        #expect(length(reversed) == 0)
     }
 
     @Test func reverseReturnsSameSingleItemList() {
@@ -197,9 +197,9 @@ struct BasicFunctionsTests {
 
         let reversed = reverse(list)
 
-        #expect(head(list: reversed) == "only")
-        #expect(length(list: reversed) == 1)
-        #expect(isEmpty(list: tail(list: reversed)))
+        #expect(head(reversed) == "only")
+        #expect(length(reversed) == 1)
+        #expect(isEmpty(tail(reversed)))
     }
 
     @Test func reverseReversesMultipleItems() {
@@ -207,11 +207,11 @@ struct BasicFunctionsTests {
 
         let reversed = reverse(list)
 
-        #expect(length(list: reversed) == 3)
-        #expect(nthOpt(n: 0, list: reversed) == 1)
-        #expect(nthOpt(n: 1, list: reversed) == 2)
-        #expect(nthOpt(n: 2, list: reversed) == 3)
-        #expect(nthOpt(n: 3, list: reversed) == nil)
+        #expect(length(reversed) == 3)
+        #expect(nthOpt(0, reversed) == 1)
+        #expect(nthOpt(1, reversed) == 2)
+        #expect(nthOpt(2, reversed) == 3)
+        #expect(nthOpt(3, reversed) == nil)
     }
 
     @Test func appendReturnsSecondListWhenFirstListIsEmpty() {
@@ -220,10 +220,10 @@ struct BasicFunctionsTests {
 
         let result = append(l0: first, l1: second)
 
-        #expect(length(list: result) == 2)
-        #expect(nthOpt(n: 0, list: result) == 2)
-        #expect(nthOpt(n: 1, list: result) == 1)
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(length(result) == 2)
+        #expect(nthOpt(0, result) == 2)
+        #expect(nthOpt(1, result) == 1)
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func appendReturnsFirstListWhenSecondListIsEmpty() {
@@ -232,17 +232,17 @@ struct BasicFunctionsTests {
 
         let result = append(l0: first, l1: second)
 
-        #expect(length(list: result) == 2)
-        #expect(nthOpt(n: 0, list: result) == 2)
-        #expect(nthOpt(n: 1, list: result) == 1)
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(length(result) == 2)
+        #expect(nthOpt(0, result) == 2)
+        #expect(nthOpt(1, result) == 1)
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func appendReturnsEmptyWhenBothListsAreEmpty() {
         let result = append(l0: LinkedList<Int>.empty, l1: LinkedList<Int>.empty)
 
-        #expect(isEmpty(list: result))
-        #expect(length(list: result) == 0)
+        #expect(isEmpty(result))
+        #expect(length(result) == 0)
     }
 
     @Test func appendPreservesOrderOfBothLists() {
@@ -251,12 +251,12 @@ struct BasicFunctionsTests {
 
         let result = append(l0: first, l1: second)
 
-        #expect(length(list: result) == 4)
-        #expect(nthOpt(n: 0, list: result) == 2)
-        #expect(nthOpt(n: 1, list: result) == 1)
-        #expect(nthOpt(n: 2, list: result) == 4)
-        #expect(nthOpt(n: 3, list: result) == 3)
-        #expect(nthOpt(n: 4, list: result) == nil)
+        #expect(length(result) == 4)
+        #expect(nthOpt(0, result) == 2)
+        #expect(nthOpt(1, result) == 1)
+        #expect(nthOpt(2, result) == 4)
+        #expect(nthOpt(3, result) == 3)
+        #expect(nthOpt(4, result) == nil)
     }
 
     @Test func emptyHelperReturnsList() {
@@ -267,11 +267,11 @@ struct BasicFunctionsTests {
             |> appendTo(second)
             |> reverse
 
-        #expect(length(list: result) == 4)
-        #expect(nthOpt(n: 0, list: result) == 4)
-        #expect(nthOpt(n: 1, list: result) == 3)
-        #expect(nthOpt(n: 2, list: result) == 2)
-        #expect(nthOpt(n: 3, list: result) == 1)
+        #expect(length(result) == 4)
+        #expect(nthOpt(0, result) == 4)
+        #expect(nthOpt(1, result) == 3)
+        #expect(nthOpt(2, result) == 2)
+        #expect(nthOpt(3, result) == 1)
     }
 
     @Test func revAppendReversesFirstListThenAppendsSecondList() {
@@ -280,13 +280,13 @@ struct BasicFunctionsTests {
 
         let result = revAppend(l0: first, l1: second)
 
-        #expect(length(list: result) == 5)
-        #expect(nthOpt(n: 0, list: result) == 3)
-        #expect(nthOpt(n: 1, list: result) == 2)
-        #expect(nthOpt(n: 2, list: result) == 1)
-        #expect(nthOpt(n: 3, list: result) == 4)
-        #expect(nthOpt(n: 4, list: result) == 5)
-        #expect(nthOpt(n: 5, list: result) == nil)
+        #expect(length(result) == 5)
+        #expect(nthOpt(0, result) == 3)
+        #expect(nthOpt(1, result) == 2)
+        #expect(nthOpt(2, result) == 1)
+        #expect(nthOpt(3, result) == 4)
+        #expect(nthOpt(4, result) == 5)
+        #expect(nthOpt(5, result) == nil)
     }
 
     @Test func revAppendReturnsSecondListWhenFirstListIsEmpty() {
@@ -295,10 +295,10 @@ struct BasicFunctionsTests {
 
         let result = revAppend(l0: first, l1: second)
 
-        #expect(length(list: result) == 2)
-        #expect(nthOpt(n: 0, list: result) == 4)
-        #expect(nthOpt(n: 1, list: result) == 5)
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(length(result) == 2)
+        #expect(nthOpt(0, result) == 4)
+        #expect(nthOpt(1, result) == 5)
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func revAppendReversesFirstListWhenSecondListIsEmpty() {
@@ -307,18 +307,18 @@ struct BasicFunctionsTests {
 
         let result = revAppend(l0: first, l1: second)
 
-        #expect(length(list: result) == 3)
-        #expect(nthOpt(n: 0, list: result) == 3)
-        #expect(nthOpt(n: 1, list: result) == 2)
-        #expect(nthOpt(n: 2, list: result) == 1)
-        #expect(nthOpt(n: 3, list: result) == nil)
+        #expect(length(result) == 3)
+        #expect(nthOpt(0, result) == 3)
+        #expect(nthOpt(1, result) == 2)
+        #expect(nthOpt(2, result) == 1)
+        #expect(nthOpt(3, result) == nil)
     }
 
     @Test func revAppendReturnsEmptyWhenBothListsAreEmpty() {
         let result = revAppend(l0: LinkedList<Int>.empty, l1: LinkedList<Int>.empty)
 
-        #expect(isEmpty(list: result))
-        #expect(length(list: result) == 0)
+        #expect(isEmpty(result))
+        #expect(length(result) == 0)
     }
 
     @Test func concatReturnsEmptyForEmptyListOfLists() {
@@ -326,8 +326,8 @@ struct BasicFunctionsTests {
 
         let result = concat(lists)
 
-        #expect(isEmpty(list: result))
-        #expect(length(list: result) == 0)
+        #expect(isEmpty(result))
+        #expect(length(result) == 0)
     }
 
     @Test func concatReturnsSingleNestedList() {
@@ -336,11 +336,11 @@ struct BasicFunctionsTests {
 
         let result = concat(lists)
 
-        #expect(length(list: result) == 3)
-        #expect(nthOpt(n: 0, list: result) == 1)
-        #expect(nthOpt(n: 1, list: result) == 2)
-        #expect(nthOpt(n: 2, list: result) == 3)
-        #expect(nthOpt(n: 3, list: result) == nil)
+        #expect(length(result) == 3)
+        #expect(nthOpt(0, result) == 1)
+        #expect(nthOpt(1, result) == 2)
+        #expect(nthOpt(2, result) == 3)
+        #expect(nthOpt(3, result) == nil)
     }
 
     @Test func concatAppendsNestedListsInOrder() {
@@ -351,13 +351,13 @@ struct BasicFunctionsTests {
 
         let result = concat(lists)
 
-        #expect(length(list: result) == 5)
-        #expect(nthOpt(n: 0, list: result) == 1)
-        #expect(nthOpt(n: 1, list: result) == 2)
-        #expect(nthOpt(n: 2, list: result) == 3)
-        #expect(nthOpt(n: 3, list: result) == 4)
-        #expect(nthOpt(n: 4, list: result) == 5)
-        #expect(nthOpt(n: 5, list: result) == nil)
+        #expect(length(result) == 5)
+        #expect(nthOpt(0, result) == 1)
+        #expect(nthOpt(1, result) == 2)
+        #expect(nthOpt(2, result) == 3)
+        #expect(nthOpt(3, result) == 4)
+        #expect(nthOpt(4, result) == 5)
+        #expect(nthOpt(5, result) == nil)
     }
 
     @Test func concatSkipsEmptyNestedLists() {
@@ -369,10 +369,10 @@ struct BasicFunctionsTests {
 
         let result = concat(lists)
 
-        #expect(length(list: result) == 3)
-        #expect(nthOpt(n: 0, list: result) == 1)
-        #expect(nthOpt(n: 1, list: result) == 2)
-        #expect(nthOpt(n: 2, list: result) == 3)
-        #expect(nthOpt(n: 3, list: result) == nil)
+        #expect(length(result) == 3)
+        #expect(nthOpt(0, result) == 1)
+        #expect(nthOpt(1, result) == 2)
+        #expect(nthOpt(2, result) == 3)
+        #expect(nthOpt(3, result) == nil)
     }
 }

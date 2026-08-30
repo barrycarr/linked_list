@@ -85,9 +85,9 @@ struct ScanningTests {
 
         _ = forAll({ value in value.isMultiple(of: 2) }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 2)
-        #expect(nthOpt(n: 1, list: list) == 4)
-        #expect(nthOpt(n: 2, list: list) == 6)
+        #expect(nthOpt(0, list) == 2)
+        #expect(nthOpt(1, list) == 4)
+        #expect(nthOpt(2, list) == 6)
     }
 
     @Test func forAllOfCanBeUsedWithPipeForward() {
@@ -232,10 +232,10 @@ struct ScanningTests {
 
         _ = forAll2({ value1, value2 in value2 == value1 * 2 }, l1, l2)
 
-        #expect(nthOpt(n: 0, list: l1) == 1)
-        #expect(nthOpt(n: 1, list: l1) == 2)
-        #expect(nthOpt(n: 0, list: l2) == 2)
-        #expect(nthOpt(n: 1, list: l2) == 4)
+        #expect(nthOpt(0, l1) == 1)
+        #expect(nthOpt(1, l1) == 2)
+        #expect(nthOpt(0, l2) == 2)
+        #expect(nthOpt(1, l2) == 4)
     }
 
     @Test func existsReturnsFalseForEmptyList() {
@@ -302,9 +302,9 @@ struct ScanningTests {
 
         _ = exists({ value in value.isMultiple(of: 2) }, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 3)
-        #expect(nthOpt(n: 2, list: list) == 5)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 3)
+        #expect(nthOpt(2, list) == 5)
     }
 
     @Test func existsOfCanBeUsedWithPipeForward() {
@@ -467,10 +467,10 @@ struct ScanningTests {
 
         _ = exists2({ value1, value2 in value2 == value1 * 2 }, l1, l2)
 
-        #expect(nthOpt(n: 0, list: l1) == 1)
-        #expect(nthOpt(n: 1, list: l1) == 2)
-        #expect(nthOpt(n: 0, list: l2) == 3)
-        #expect(nthOpt(n: 1, list: l2) == 4)
+        #expect(nthOpt(0, l1) == 1)
+        #expect(nthOpt(1, l1) == 2)
+        #expect(nthOpt(0, l2) == 3)
+        #expect(nthOpt(1, l2) == 4)
     }
 
     @Test func memReturnsTrueWhenListContainsValue() {
@@ -575,8 +575,8 @@ struct ScanningTests {
         _ = mem(2, list)
         _ = memBy({ element, value in element == value }, 3, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
     }
 }

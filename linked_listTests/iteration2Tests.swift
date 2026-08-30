@@ -127,8 +127,8 @@ struct Iteration2Tests {
         }, l1, l2)
 
         if case .success(let mapped) = result {
-            #expect(isEmpty(list: mapped))
-            #expect(length(list: mapped) == 0)
+            #expect(isEmpty(mapped))
+            #expect(length(mapped) == 0)
         } else {
             #expect(Bool(false))
         }
@@ -146,8 +146,8 @@ struct Iteration2Tests {
         }, l1, l2)
 
         if case .success(let mapped) = result {
-            #expect(isEmpty(list: mapped))
-            #expect(length(list: mapped) == 0)
+            #expect(isEmpty(mapped))
+            #expect(length(mapped) == 0)
         } else {
             #expect(Bool(false))
         }
@@ -163,11 +163,11 @@ struct Iteration2Tests {
         }, l1, l2)
 
         if case .success(let mapped) = result {
-            #expect(length(list: mapped) == 3)
-            #expect(nthOpt(n: 0, list: mapped) == 11)
-            #expect(nthOpt(n: 1, list: mapped) == 22)
-            #expect(nthOpt(n: 2, list: mapped) == 33)
-            #expect(nthOpt(n: 3, list: mapped) == nil)
+            #expect(length(mapped) == 3)
+            #expect(nthOpt(0, mapped) == 11)
+            #expect(nthOpt(1, mapped) == 22)
+            #expect(nthOpt(2, mapped) == 33)
+            #expect(nthOpt(3, mapped) == nil)
         } else {
             #expect(Bool(false))
         }
@@ -182,11 +182,11 @@ struct Iteration2Tests {
         }, l1, l2)
 
         if case .success(let mapped) = result {
-            #expect(length(list: mapped) == 3)
-            #expect(nthOpt(n: 0, list: mapped) == 33)
-            #expect(nthOpt(n: 1, list: mapped) == 22)
-            #expect(nthOpt(n: 2, list: mapped) == 11)
-            #expect(nthOpt(n: 3, list: mapped) == nil)
+            #expect(length(mapped) == 3)
+            #expect(nthOpt(0, mapped) == 33)
+            #expect(nthOpt(1, mapped) == 22)
+            #expect(nthOpt(2, mapped) == 11)
+            #expect(nthOpt(3, mapped) == nil)
         } else {
             #expect(Bool(false))
         }
@@ -201,10 +201,10 @@ struct Iteration2Tests {
         }, l1, l2)
 
         if case .success(let mapped) = result {
-            #expect(length(list: mapped) == 2)
-            #expect(nthOpt(n: 0, list: mapped) == "a-1")
-            #expect(nthOpt(n: 1, list: mapped) == "b-2")
-            #expect(nthOpt(n: 2, list: mapped) == nil)
+            #expect(length(mapped) == 2)
+            #expect(nthOpt(0, mapped) == "a-1")
+            #expect(nthOpt(1, mapped) == "b-2")
+            #expect(nthOpt(2, mapped) == nil)
         } else {
             #expect(Bool(false))
         }
@@ -219,10 +219,10 @@ struct Iteration2Tests {
         }, l1, l2)
 
         if case .success(let mapped) = result {
-            #expect(length(list: mapped) == 2)
-            #expect(nthOpt(n: 0, list: mapped) == "b-2")
-            #expect(nthOpt(n: 1, list: mapped) == "a-1")
-            #expect(nthOpt(n: 2, list: mapped) == nil)
+            #expect(length(mapped) == 2)
+            #expect(nthOpt(0, mapped) == "b-2")
+            #expect(nthOpt(1, mapped) == "a-1")
+            #expect(nthOpt(2, mapped) == nil)
         } else {
             #expect(Bool(false))
         }
@@ -306,10 +306,10 @@ struct Iteration2Tests {
 
         _ = map2({ value1, value2 in value1 + value2 }, l1, l2)
 
-        #expect(nthOpt(n: 0, list: l1) == 1)
-        #expect(nthOpt(n: 1, list: l1) == 2)
-        #expect(nthOpt(n: 0, list: l2) == 10)
-        #expect(nthOpt(n: 1, list: l2) == 20)
+        #expect(nthOpt(0, l1) == 1)
+        #expect(nthOpt(1, l1) == 2)
+        #expect(nthOpt(0, l2) == 10)
+        #expect(nthOpt(1, l2) == 20)
     }
 
     @Test func revMap2DoesNotChangeOriginalLists() {
@@ -318,10 +318,10 @@ struct Iteration2Tests {
 
         _ = revMap2({ value1, value2 in value1 + value2 }, l1, l2)
 
-        #expect(nthOpt(n: 0, list: l1) == 1)
-        #expect(nthOpt(n: 1, list: l1) == 2)
-        #expect(nthOpt(n: 0, list: l2) == 10)
-        #expect(nthOpt(n: 1, list: l2) == 20)
+        #expect(nthOpt(0, l1) == 1)
+        #expect(nthOpt(1, l1) == 2)
+        #expect(nthOpt(0, l2) == 10)
+        #expect(nthOpt(1, l2) == 20)
     }
 
     @Test func foldLeft2ReturnsAccumulatorForTwoEmptyLists() {
@@ -416,10 +416,10 @@ struct Iteration2Tests {
             acc + value1 + value2
         }, 0, l1, l2)
 
-        #expect(nthOpt(n: 0, list: l1) == 1)
-        #expect(nthOpt(n: 1, list: l1) == 2)
-        #expect(nthOpt(n: 0, list: l2) == 10)
-        #expect(nthOpt(n: 1, list: l2) == 20)
+        #expect(nthOpt(0, l1) == 1)
+        #expect(nthOpt(1, l1) == 2)
+        #expect(nthOpt(0, l2) == 10)
+        #expect(nthOpt(1, l2) == 20)
     }
 
     @Test func foldRight2ReturnsAccumulatorForTwoEmptyLists() {
@@ -514,9 +514,9 @@ struct Iteration2Tests {
             value1 + value2 + acc
         }, l1, l2, 0)
 
-        #expect(nthOpt(n: 0, list: l1) == 1)
-        #expect(nthOpt(n: 1, list: l1) == 2)
-        #expect(nthOpt(n: 0, list: l2) == 10)
-        #expect(nthOpt(n: 1, list: l2) == 20)
+        #expect(nthOpt(0, l1) == 1)
+        #expect(nthOpt(1, l1) == 2)
+        #expect(nthOpt(0, l2) == 10)
+        #expect(nthOpt(1, l2) == 20)
     }
 }

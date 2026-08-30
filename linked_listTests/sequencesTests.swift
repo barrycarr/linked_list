@@ -11,9 +11,9 @@ import Testing
 struct SequencesTests {
     private func expectList<T: Equatable>(_ list: LinkedList<T>, equals values: [T]) {
         for (index, value) in values.enumerated() {
-            #expect(nthOpt(n: index, list: list) == value)
+            #expect(nthOpt(index, list) == value)
         }
-        #expect(nthOpt(n: values.count, list: list) == nil)
+        #expect(nthOpt(values.count, list) == nil)
     }
 
     @Test func emptyListIteratesNoValues() {
@@ -79,7 +79,7 @@ struct SequencesTests {
     @Test func ofArrayReturnsEmptyListForEmptyArray() {
         let result = ofArray([Int]())
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
     }
 
     @Test func ofArrayPreservesArrayOrder() {
@@ -93,7 +93,7 @@ struct SequencesTests {
 
         let result = ofCollection(values)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
     }
 
     @Test func ofCollectionPreservesCollectionOrder() {
@@ -111,7 +111,7 @@ struct SequencesTests {
 
         let result = ofSeq(values)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
     }
 
     @Test func ofSeqPreservesSequenceOrder() {

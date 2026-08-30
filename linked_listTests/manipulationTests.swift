@@ -11,9 +11,9 @@ import Testing
 struct ManipulationTests {
     private func expectList<T: Equatable>(_ list: LinkedList<T>, equals values: [T]) {
         for (index, value) in values.enumerated() {
-            #expect(nthOpt(n: index, list: list) == value)
+            #expect(nthOpt(index, list) == value)
         }
-        #expect(nthOpt(n: values.count, list: list) == nil)
+        #expect(nthOpt(values.count, list) == nil)
     }
 
     @Test func takeReturnsEmptyListForEmptyList() {
@@ -22,7 +22,7 @@ struct ManipulationTests {
         let result = take(3, list)
 
         if case .success(let list) = result {
-            #expect(isEmpty(list: list))
+            #expect(isEmpty(list))
         } else {
             #expect(Bool(false))
         }
@@ -34,7 +34,7 @@ struct ManipulationTests {
         let result = take(0, list)
 
         if case .success(let list) = result {
-            #expect(isEmpty(list: list))
+            #expect(isEmpty(list))
         } else {
             #expect(Bool(false))
         }
@@ -117,9 +117,9 @@ struct ManipulationTests {
 
         _ = take(2, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
     }
 
     @Test func takeOfCanBeUsedWithPipeForward() {
@@ -140,7 +140,7 @@ struct ManipulationTests {
         let result = drop(3, list)
 
         if case .success(let list) = result {
-            #expect(isEmpty(list: list))
+            #expect(isEmpty(list))
         } else {
             #expect(Bool(false))
         }
@@ -200,7 +200,7 @@ struct ManipulationTests {
         let result = drop(3, list)
 
         if case .success(let list) = result {
-            #expect(isEmpty(list: list))
+            #expect(isEmpty(list))
         } else {
             #expect(Bool(false))
         }
@@ -212,7 +212,7 @@ struct ManipulationTests {
         let result = drop(5, list)
 
         if case .success(let list) = result {
-            #expect(isEmpty(list: list))
+            #expect(isEmpty(list))
         } else {
             #expect(Bool(false))
         }
@@ -235,9 +235,9 @@ struct ManipulationTests {
 
         _ = drop(2, list)
 
-        #expect(nthOpt(n: 0, list: list) == 1)
-        #expect(nthOpt(n: 1, list: list) == 2)
-        #expect(nthOpt(n: 2, list: list) == 3)
+        #expect(nthOpt(0, list) == 1)
+        #expect(nthOpt(1, list) == 2)
+        #expect(nthOpt(2, list) == 3)
     }
 
     @Test func dropOfCanBeUsedWithPipeForward() {
@@ -261,7 +261,7 @@ struct ManipulationTests {
             return true
         }, list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
         #expect(callCount == 0)
     }
 
@@ -272,7 +272,7 @@ struct ManipulationTests {
             value.isMultiple(of: 2)
         }, list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
     }
 
     @Test func takeWhileReturnsMatchingPrefixInOriginalOrder() {
@@ -345,7 +345,7 @@ struct ManipulationTests {
             return true
         }, list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
         #expect(callCount == 0)
     }
 
@@ -376,7 +376,7 @@ struct ManipulationTests {
             value.isMultiple(of: 2)
         }, list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
     }
 
     @Test func dropWhileStopsCheckingAfterFirstNonMatchingElement() {
@@ -429,8 +429,8 @@ struct ManipulationTests {
             return true
         }, list)
 
-        #expect(isEmpty(list: matching))
-        #expect(isEmpty(list: nonMatching))
+        #expect(isEmpty(matching))
+        #expect(isEmpty(nonMatching))
         #expect(callCount == 0)
     }
 
@@ -464,7 +464,7 @@ struct ManipulationTests {
         }, list)
 
         expectList(matching, equals: [2, 4, 6])
-        #expect(isEmpty(list: nonMatching))
+        #expect(isEmpty(nonMatching))
     }
 
     @Test func partitionReturnsAllElementsInSecondListWhenNoElementMatches() {
@@ -474,7 +474,7 @@ struct ManipulationTests {
             value.isMultiple(of: 2)
         }, list)
 
-        #expect(isEmpty(list: matching))
+        #expect(isEmpty(matching))
         expectList(nonMatching, equals: [1, 3, 5])
     }
 
@@ -529,8 +529,8 @@ struct ManipulationTests {
             return Either<String, Int>.left(String(value))
         }, list)
 
-        #expect(isEmpty(list: left))
-        #expect(isEmpty(list: right))
+        #expect(isEmpty(left))
+        #expect(isEmpty(right))
         #expect(callCount == 0)
     }
 
@@ -568,7 +568,7 @@ struct ManipulationTests {
         }, list)
 
         expectList(left, equals: ["1", "2", "3"])
-        #expect(isEmpty(list: right))
+        #expect(isEmpty(right))
     }
 
     @Test func partitionMapReturnsAllMappedValuesInRightListWhenEveryElementMapsRight() {
@@ -578,7 +578,7 @@ struct ManipulationTests {
             Either<String, Int>.right(value * 2)
         }, list)
 
-        #expect(isEmpty(list: left))
+        #expect(isEmpty(left))
         expectList(right, equals: [2, 4, 6])
     }
 

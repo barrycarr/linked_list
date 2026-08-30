@@ -134,11 +134,11 @@ struct AssociationTests {
 
         _ = assoc("two", list)
 
-        #expect(nthOpt(n: 0, list: list)?.0 == "one")
-        #expect(nthOpt(n: 0, list: list)?.1 == 1)
-        #expect(nthOpt(n: 1, list: list)?.0 == "two")
-        #expect(nthOpt(n: 1, list: list)?.1 == 2)
-        #expect(nthOpt(n: 2, list: list) == nil)
+        #expect(nthOpt(0, list)?.0 == "one")
+        #expect(nthOpt(0, list)?.1 == 1)
+        #expect(nthOpt(1, list)?.0 == "two")
+        #expect(nthOpt(1, list)?.1 == 2)
+        #expect(nthOpt(2, list) == nil)
     }
 
     @Test func assqOptReturnsNilForEmptyList() {
@@ -274,11 +274,11 @@ struct AssociationTests {
 
         _ = assq(second, list)
 
-        #expect(nthOpt(n: 0, list: list)?.0 === first)
-        #expect(nthOpt(n: 0, list: list)?.1 == "one")
-        #expect(nthOpt(n: 1, list: list)?.0 === second)
-        #expect(nthOpt(n: 1, list: list)?.1 == "two")
-        #expect(nthOpt(n: 2, list: list) == nil)
+        #expect(nthOpt(0, list)?.0 === first)
+        #expect(nthOpt(0, list)?.1 == "one")
+        #expect(nthOpt(1, list)?.0 === second)
+        #expect(nthOpt(1, list)?.1 == "two")
+        #expect(nthOpt(2, list) == nil)
     }
 
     @Test func memAssocReturnsFalseForEmptyList() {
@@ -392,7 +392,7 @@ struct AssociationTests {
 
         let result = removeAssoc("one", list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
     }
 
     @Test func removeAssocRemovesFirstMatchingKey() {
@@ -400,11 +400,11 @@ struct AssociationTests {
 
         let result = removeAssoc("two", list)
 
-        #expect(nthOpt(n: 0, list: result)?.0 == "one")
-        #expect(nthOpt(n: 0, list: result)?.1 == 1)
-        #expect(nthOpt(n: 1, list: result)?.0 == "three")
-        #expect(nthOpt(n: 1, list: result)?.1 == 3)
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(nthOpt(0, result)?.0 == "one")
+        #expect(nthOpt(0, result)?.1 == 1)
+        #expect(nthOpt(1, result)?.0 == "three")
+        #expect(nthOpt(1, result)?.1 == 3)
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func removeAssocRemovesOnlyFirstMatchingKeyWhenKeyAppearsMultipleTimes() {
@@ -412,13 +412,13 @@ struct AssociationTests {
 
         let result = removeAssoc("two", list)
 
-        #expect(nthOpt(n: 0, list: result)?.0 == "one")
-        #expect(nthOpt(n: 0, list: result)?.1 == 1)
-        #expect(nthOpt(n: 1, list: result)?.0 == "two")
-        #expect(nthOpt(n: 1, list: result)?.1 == 22)
-        #expect(nthOpt(n: 2, list: result)?.0 == "three")
-        #expect(nthOpt(n: 2, list: result)?.1 == 3)
-        #expect(nthOpt(n: 3, list: result) == nil)
+        #expect(nthOpt(0, result)?.0 == "one")
+        #expect(nthOpt(0, result)?.1 == 1)
+        #expect(nthOpt(1, result)?.0 == "two")
+        #expect(nthOpt(1, result)?.1 == 22)
+        #expect(nthOpt(2, result)?.0 == "three")
+        #expect(nthOpt(2, result)?.1 == 3)
+        #expect(nthOpt(3, result) == nil)
     }
 
     @Test func removeAssocReturnsOriginalValuesWhenKeyIsNotFound() {
@@ -426,11 +426,11 @@ struct AssociationTests {
 
         let result = removeAssoc("three", list)
 
-        #expect(nthOpt(n: 0, list: result)?.0 == "one")
-        #expect(nthOpt(n: 0, list: result)?.1 == 1)
-        #expect(nthOpt(n: 1, list: result)?.0 == "two")
-        #expect(nthOpt(n: 1, list: result)?.1 == 2)
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(nthOpt(0, result)?.0 == "one")
+        #expect(nthOpt(0, result)?.1 == 1)
+        #expect(nthOpt(1, result)?.0 == "two")
+        #expect(nthOpt(1, result)?.1 == 2)
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func removeAssocUsesEquatableKeyEquality() {
@@ -438,9 +438,9 @@ struct AssociationTests {
 
         let result = removeAssoc(String("one"), list)
 
-        #expect(nthOpt(n: 0, list: result)?.0 == "two")
-        #expect(nthOpt(n: 0, list: result)?.1 == 2)
-        #expect(nthOpt(n: 1, list: result) == nil)
+        #expect(nthOpt(0, result)?.0 == "two")
+        #expect(nthOpt(0, result)?.1 == 2)
+        #expect(nthOpt(1, result) == nil)
     }
 
     @Test func removeAssocOfCanBeUsedWithPipeForward() {
@@ -448,11 +448,11 @@ struct AssociationTests {
 
         let result = list |> removeAssocOf(2)
 
-        #expect(nthOpt(n: 0, list: result)?.0 == 1)
-        #expect(nthOpt(n: 0, list: result)?.1 == "one")
-        #expect(nthOpt(n: 1, list: result)?.0 == 3)
-        #expect(nthOpt(n: 1, list: result)?.1 == "three")
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(nthOpt(0, result)?.0 == 1)
+        #expect(nthOpt(0, result)?.1 == "one")
+        #expect(nthOpt(1, result)?.0 == 3)
+        #expect(nthOpt(1, result)?.1 == "three")
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func removeAssocDoesNotChangeOriginalList() {
@@ -460,11 +460,11 @@ struct AssociationTests {
 
         _ = removeAssoc("one", list)
 
-        #expect(nthOpt(n: 0, list: list)?.0 == "one")
-        #expect(nthOpt(n: 0, list: list)?.1 == 1)
-        #expect(nthOpt(n: 1, list: list)?.0 == "two")
-        #expect(nthOpt(n: 1, list: list)?.1 == 2)
-        #expect(nthOpt(n: 2, list: list) == nil)
+        #expect(nthOpt(0, list)?.0 == "one")
+        #expect(nthOpt(0, list)?.1 == 1)
+        #expect(nthOpt(1, list)?.0 == "two")
+        #expect(nthOpt(1, list)?.1 == 2)
+        #expect(nthOpt(2, list) == nil)
     }
 
     @Test func removeAssqReturnsEmptyListForEmptyList() {
@@ -473,7 +473,7 @@ struct AssociationTests {
 
         let result = removeAssq(key, list)
 
-        #expect(isEmpty(list: result))
+        #expect(isEmpty(result))
     }
 
     @Test func removeAssqRemovesFirstIdenticalKeyInstance() {
@@ -484,11 +484,11 @@ struct AssociationTests {
 
         let result = removeAssq(second, list)
 
-        #expect(nthOpt(n: 0, list: result)?.0 === first)
-        #expect(nthOpt(n: 0, list: result)?.1 == "one")
-        #expect(nthOpt(n: 1, list: result)?.0 === third)
-        #expect(nthOpt(n: 1, list: result)?.1 == "three")
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(nthOpt(0, result)?.0 === first)
+        #expect(nthOpt(0, result)?.1 == "one")
+        #expect(nthOpt(1, result)?.0 === third)
+        #expect(nthOpt(1, result)?.1 == "three")
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func removeAssqRemovesOnlyFirstMatchingKeyWhenSameInstanceAppearsMultipleTimes() {
@@ -498,11 +498,11 @@ struct AssociationTests {
 
         let result = removeAssq(key, list)
 
-        #expect(nthOpt(n: 0, list: result)?.0 === other)
-        #expect(nthOpt(n: 0, list: result)?.1 == "other")
-        #expect(nthOpt(n: 1, list: result)?.0 === key)
-        #expect(nthOpt(n: 1, list: result)?.1 == "second")
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(nthOpt(0, result)?.0 === other)
+        #expect(nthOpt(0, result)?.1 == "other")
+        #expect(nthOpt(1, result)?.0 === key)
+        #expect(nthOpt(1, result)?.1 == "second")
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func removeAssqDoesNotRemoveEqualButDifferentKeyInstance() {
@@ -512,9 +512,9 @@ struct AssociationTests {
 
         let result = removeAssq(equalButDifferentInstance, list)
 
-        #expect(nthOpt(n: 0, list: result)?.0 === stored)
-        #expect(nthOpt(n: 0, list: result)?.1 == "one")
-        #expect(nthOpt(n: 1, list: result) == nil)
+        #expect(nthOpt(0, result)?.0 === stored)
+        #expect(nthOpt(0, result)?.1 == "one")
+        #expect(nthOpt(1, result) == nil)
     }
 
     @Test func removeAssqReturnsOriginalValuesWhenKeyIsNotFound() {
@@ -524,9 +524,9 @@ struct AssociationTests {
 
         let result = removeAssq(missing, list)
 
-        #expect(nthOpt(n: 0, list: result)?.0 === stored)
-        #expect(nthOpt(n: 0, list: result)?.1 == "one")
-        #expect(nthOpt(n: 1, list: result) == nil)
+        #expect(nthOpt(0, result)?.0 === stored)
+        #expect(nthOpt(0, result)?.1 == "one")
+        #expect(nthOpt(1, result) == nil)
     }
 
     @Test func removeAssqOfCanBeUsedWithPipeForward() {
@@ -537,11 +537,11 @@ struct AssociationTests {
 
         let result = list |> removeAssqOf(first)
 
-        #expect(nthOpt(n: 0, list: result)?.0 === second)
-        #expect(nthOpt(n: 0, list: result)?.1 == "two")
-        #expect(nthOpt(n: 1, list: result)?.0 === third)
-        #expect(nthOpt(n: 1, list: result)?.1 == "three")
-        #expect(nthOpt(n: 2, list: result) == nil)
+        #expect(nthOpt(0, result)?.0 === second)
+        #expect(nthOpt(0, result)?.1 == "two")
+        #expect(nthOpt(1, result)?.0 === third)
+        #expect(nthOpt(1, result)?.1 == "three")
+        #expect(nthOpt(2, result) == nil)
     }
 
     @Test func removeAssqDoesNotChangeOriginalList() {
@@ -551,10 +551,10 @@ struct AssociationTests {
 
         _ = removeAssq(first, list)
 
-        #expect(nthOpt(n: 0, list: list)?.0 === first)
-        #expect(nthOpt(n: 0, list: list)?.1 == "one")
-        #expect(nthOpt(n: 1, list: list)?.0 === second)
-        #expect(nthOpt(n: 1, list: list)?.1 == "two")
-        #expect(nthOpt(n: 2, list: list) == nil)
+        #expect(nthOpt(0, list)?.0 === first)
+        #expect(nthOpt(0, list)?.1 == "one")
+        #expect(nthOpt(1, list)?.0 === second)
+        #expect(nthOpt(1, list)?.1 == "two")
+        #expect(nthOpt(2, list) == nil)
     }
 }
