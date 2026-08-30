@@ -218,7 +218,7 @@ struct BasicFunctionsTests {
         let first = LinkedList<Int>.empty
         let second = LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty))
 
-        let result = append(l0: first, l1: second)
+        let result = append(first, second)
 
         #expect(length(result) == 2)
         #expect(nthOpt(0, result) == 2)
@@ -230,7 +230,7 @@ struct BasicFunctionsTests {
         let first = LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty))
         let second = LinkedList<Int>.empty
 
-        let result = append(l0: first, l1: second)
+        let result = append(first, second)
 
         #expect(length(result) == 2)
         #expect(nthOpt(0, result) == 2)
@@ -239,7 +239,7 @@ struct BasicFunctionsTests {
     }
 
     @Test func appendReturnsEmptyWhenBothListsAreEmpty() {
-        let result = append(l0: LinkedList<Int>.empty, l1: LinkedList<Int>.empty)
+        let result = append(LinkedList<Int>.empty, LinkedList<Int>.empty)
 
         #expect(isEmpty(result))
         #expect(length(result) == 0)
@@ -249,7 +249,7 @@ struct BasicFunctionsTests {
         let first = LinkedList.cons(2, LinkedList.cons(1, LinkedList<Int>.empty))
         let second = LinkedList.cons(4, LinkedList.cons(3, LinkedList<Int>.empty))
 
-        let result = append(l0: first, l1: second)
+        let result = append(first, second)
 
         #expect(length(result) == 4)
         #expect(nthOpt(0, result) == 2)
@@ -278,7 +278,7 @@ struct BasicFunctionsTests {
         let first = 1 +| 2 +| 3 +| LinkedList<Int>.empty
         let second = 4 +| 5 +| LinkedList<Int>.empty
 
-        let result = revAppend(l0: first, l1: second)
+        let result = revAppend(first, second)
 
         #expect(length(result) == 5)
         #expect(nthOpt(0, result) == 3)
@@ -293,7 +293,7 @@ struct BasicFunctionsTests {
         let first = LinkedList<Int>.empty
         let second = 4 +| 5 +| LinkedList<Int>.empty
 
-        let result = revAppend(l0: first, l1: second)
+        let result = revAppend(first, second)
 
         #expect(length(result) == 2)
         #expect(nthOpt(0, result) == 4)
@@ -305,7 +305,7 @@ struct BasicFunctionsTests {
         let first = 1 +| 2 +| 3 +| LinkedList<Int>.empty
         let second = LinkedList<Int>.empty
 
-        let result = revAppend(l0: first, l1: second)
+        let result = revAppend(first, second)
 
         #expect(length(result) == 3)
         #expect(nthOpt(0, result) == 3)
@@ -315,7 +315,7 @@ struct BasicFunctionsTests {
     }
 
     @Test func revAppendReturnsEmptyWhenBothListsAreEmpty() {
-        let result = revAppend(l0: LinkedList<Int>.empty, l1: LinkedList<Int>.empty)
+        let result = revAppend(LinkedList<Int>.empty, LinkedList<Int>.empty)
 
         #expect(isEmpty(result))
         #expect(length(result) == 0)

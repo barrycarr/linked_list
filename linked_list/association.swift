@@ -80,7 +80,7 @@ public func removeAssoc<K: Equatable, V>(_ key: K, _ list: LinkedList<(K, V)>) -
         case .empty: return reverse(res)
         case .cons(let val, let rest):
             if val.0 == key {
-                return revAppend(l0: res, l1: rest)
+                return revAppend(res, rest)
             }
             return doRemoveAssoc(rest, val +| res)
         }
@@ -99,7 +99,7 @@ public func removeAssq<K: AnyObject, V>(_ key: K, _ list: LinkedList<(K, V)>) ->
         case .empty: return reverse(res)
         case .cons(let val, let rest):
             if val.0 === key {
-                return revAppend(l0: res, l1: rest)
+                return revAppend(res, rest)
             }
             return doRemoveAssq(rest, val +| res)
         }

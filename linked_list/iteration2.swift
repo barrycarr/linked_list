@@ -5,11 +5,36 @@
 //  Created by Barry Carr on 26/08/2026.
 //
 
+/// A function called for each pair of values from two lists.
 public typealias ListIteration2<T1, T2> = (T1, T2) -> Void
+
+/// A function that transforms a pair of values from two lists into one value.
 public typealias ListMap2<T1, T2, U> = (T1, T2) -> U
+
+/// A left-fold function over two lists.
+///
+/// The first argument is the current accumulator, followed by one value from
+/// each list.
 public typealias ListFoldLeft2<A, T1, T2> = (A, T1, T2) -> A
+
+/// A right-fold function over two lists.
+///
+/// The first two arguments are one value from each list, followed by the folded
+/// result of the remaining lists.
 public typealias ListFoldRight2<T1, T2, A> = (T1, T2, A) -> A
 
+/// Calls a function for each pair of values from two lists.
+///
+/// Iteration proceeds from left to right and stops with an error if the lists
+/// have different lengths.
+///
+/// - Parameters:
+///   - fn: The function to call with each pair of values.
+///   - l1: The first list.
+///   - l2: The second list.
+/// - Returns: `.success(())` when both lists have the same length,
+///   `.failure(.list1TooShort)` when `l1` ends first, or
+///   `.failure(.list2TooShort)` when `l2` ends first.
 public func iter2<T1, T2>(
     _ fn: ListIteration2<T1, T2>,
     _ l1: LinkedList<T1>,
@@ -25,6 +50,15 @@ public func iter2<T1, T2>(
     }
 }
 
+/// Maps pairs of values from two lists and returns the results in reverse order.
+///
+/// - Parameters:
+///   - fn: The function used to transform each pair of values.
+///   - l1: The first list.
+///   - l2: The second list.
+/// - Returns: `.success(list)` with the mapped values in reverse order when both
+///   lists have the same length, `.failure(.list1TooShort)` when `l1` ends
+///   first, or `.failure(.list2TooShort)` when `l2` ends first.
 public func revMap2<T1, T2, U>(
     _ fn: ListMap2<T1, T2, U>,
     _ l1: LinkedList<T1>,
@@ -47,6 +81,15 @@ public func revMap2<T1, T2, U>(
     return doRevMap2(l1, l2, LinkedList<U>.empty)
 }
 
+/// Maps pairs of values from two lists.
+///
+/// - Parameters:
+///   - fn: The function used to transform each pair of values.
+///   - l1: The first list.
+///   - l2: The second list.
+/// - Returns: `.success(list)` with the mapped values in order when both lists
+///   have the same length, `.failure(.list1TooShort)` when `l1` ends first, or
+///   `.failure(.list2TooShort)` when `l2` ends first.
 public func map2<T1, T2, U>(
     _ fn: ListMap2<T1, T2, U>,
     _ l1: LinkedList<T1>,
@@ -55,6 +98,16 @@ public func map2<T1, T2, U>(
     revMap2(fn, l1, l2).map(reverse)
 }
 
+/// Folds two lists from left to right.
+///
+/// - Parameters:
+///   - fn: The function used to combine the accumulator and each pair of values.
+///   - acc: The initial accumulator.
+///   - l1: The first list.
+///   - l2: The second list.
+/// - Returns: `.success(accumulator)` when both lists have the same length,
+///   `.failure(.list1TooShort)` when `l1` ends first, or
+///   `.failure(.list2TooShort)` when `l2` ends first.
 public func foldLeft2<A, T1, T2>(
     _ fn: ListFoldLeft2<A, T1, T2>,
     _ acc: A,
@@ -71,7 +124,18 @@ public func foldLeft2<A, T1, T2>(
     }
 }
 
-// NOT tail Recursive
+/// Folds two lists from right to left.
+///
+/// This function is not tail-recursive.
+///
+/// - Parameters:
+///   - fn: The function used to combine each pair of values with the folded rest.
+///   - l1: The first list.
+///   - l2: The second list.
+///   - acc: The initial accumulator used at the end of the lists.
+/// - Returns: `.success(accumulator)` when both lists have the same length,
+///   `.failure(.list1TooShort)` when `l1` ends first, or
+///   `.failure(.list2TooShort)` when `l2` ends first.
 public func foldRight2<T1, T2, A>(
     _ fn: ListFoldRight2<T1, T2, A>,
     _ l1: LinkedList<T1>,
