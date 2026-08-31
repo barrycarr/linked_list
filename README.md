@@ -68,6 +68,17 @@ let array = toArray(list)
 
 Public types and functions include Swift documentation comments. In Xcode, use Quick Help or build generated documentation for detailed behavior, parameters, return values, and failure cases.
 
+## Swift Package Manager
+
+The project includes a `Package.swift` manifest, so it can be built and tested with Swift Package Manager:
+
+```sh
+swift build
+swift test
+```
+
+The package uses the existing `linked_list` source directory and `linked_listTests` test directory as SwiftPM targets.
+
 ## Operators
 
 | Operator | Purpose | Example |
@@ -288,7 +299,7 @@ compare({ lhs, rhs in lhs - rhs }, left, right)
 
 ## Testing
 
-This is an Xcode project using Swift Testing.
+This project uses Swift Testing and can be tested from Xcode or Swift Package Manager.
 
 Open the project:
 
@@ -297,5 +308,11 @@ open linked_list.xcodeproj
 ```
 
 Then run the `linked_list` test plan from Xcode.
+
+To run the tests with Swift Package Manager:
+
+```sh
+swift test
+```
 
 The current test suite covers the public list functions across basic operations, comparison, iteration, two-list iteration, pair helpers, scanning, searching, association lists, manipulation, sorting, sequences, conversions, and operators.
