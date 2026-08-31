@@ -89,9 +89,9 @@ The package uses the existing `linked_list` source directory and `linked_listTes
 
 | Operator | Purpose | Example |
 | --- | --- | --- |
-| `+|` | Cons a value onto the front of a list | `1 +| list` |
+| +&#124 | Cons a value onto the front of a list | `1 +| list` |
 | `<>` | Append two lists | `left <> right` |
-| `|>` | Pipe-forward operator | `list |> mapOf { $0 * 2 }` |
+| &#124> | Pipe-forward operator | `list |> mapOf { $0 * 2 }` |
 
 ## Basic Functions
 
