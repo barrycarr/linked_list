@@ -2,7 +2,9 @@
 
 An OCaml-inspired immutable linked list library for Swift. It's based on the list module in OCaml 5.5
 
-I wrote this to learn Swift, I don't expect anyone to have a use for this other than for interest and reference.   
+I wrote this to learn Swift; I don't expect anyone to use it except for interest and reference. This code makes heavy use of recursion, so you'll want to ensure that the appropriate optimisations are enabled to ensure that tail calls are utilised. 
+
+Should you use it? Probably not; Swift has perfectly good data structures that do the same job as this linked list. I did this as a purely academic exercise. That being said, if you want to use it, the code comes with absolutely no warranty; use it at your own risk.  
 
 The core type is a recursive enum:
 
