@@ -1,7 +1,7 @@
 # linked_list
 
 ## Intro
-An OCaml-inspired immutable linked list library for Swift. It's based on the list module in OCaml 5.5
+An OCaml-inspired immutable linked list library for Swift. It's based on the list module in [OCaml 5.5](https://ocaml.org/manual/5.5/api/List.html#top) 
 
 I wrote this to learn Swift; I don't expect anyone to use it except for interest and reference. This code makes heavy use of recursion, so you'll want to ensure that the appropriate optimisations are enabled to ensure that tail calls are utilised. 
 
